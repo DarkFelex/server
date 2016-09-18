@@ -13,12 +13,21 @@ public class Main {
         AllRequestsServlet allRequestsServlet = new AllRequestsServlet();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        /**
+         * Запрос, который пришёл на указанный ресурс будет собран в объеки
+         * и передал в указанный сервлет.
+         *
+         * Получает объект request, в которомо будут параметры с которыми пользователь сделал запрос.
+         * Отдаст объект response, который пользователь получит и отобразит как страницу.
+         *
+         */
         context.addServlet(new ServletHolder(allRequestsServlet), "/*");
 
         Server server = new Server(8080);
         server.setHandler(context);
 
         server.start();
+        System.out.println("Server started!");
         server.join();
     }
 }

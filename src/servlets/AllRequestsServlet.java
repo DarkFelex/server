@@ -12,6 +12,8 @@ import java.util.Map;
 
 /**
  * Created by nmikutskiy on 18.09.16.
+ *
+ * Тут функции, которые будут выполняться, когда пользователь запросит указанный документ (адрес)
  */
 public class AllRequestsServlet extends HttpServlet {
 
