@@ -15,6 +15,7 @@ import java.util.Map;
  *
  * Тут функции, которые будут выполняться, когда пользователь запросит указанный документ (адрес)
  */
+@Deprecated
 public class AllRequestsServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request,
