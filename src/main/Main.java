@@ -10,6 +10,8 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.SessionsServlet;
 import servlets.UsersServlet;
+import servlets.SignInServlet;
+import servlets.SignUpServlet;
 
 /**
  * Created by nmikutskiy on 18.09.16.
@@ -31,6 +33,9 @@ public class Main {
          */
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
+        context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
+        context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+
 
         //Для работы со статическими ресурсами
         ResourceHandler resource_handler = new ResourceHandler();

@@ -12,7 +12,6 @@ import java.io.IOException;
  * Created by nmikutskiy on 19.09.16.
  */
 public class UsersServlet extends HttpServlet {
-    @SuppressWarnings({"FieldCanBeLocal", "UnusedDeclaration"}) //todo: remove after module 2 home work
     private final AccountService accountService;
 
     public UsersServlet(AccountService accountService) {
@@ -22,24 +21,24 @@ public class UsersServlet extends HttpServlet {
     //get public user profile
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
-        //todo: module 2 home work
+        //todo: now
     }
 
     //sign up
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
-        //todo: module 2 home work
+
     }
 
     //change profile
     public void doPut(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
-        //todo: module 2 home work
+        //todo: not soon
     }
 
     //unregister
     public void doDelete(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        //todo: module 2 home work
+        //todo: not soon
     }
 }
