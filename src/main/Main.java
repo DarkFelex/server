@@ -37,7 +37,7 @@ public class Main {
             dbService.cleanUp();
         } catch (DBException e) {
             e.printStackTrace();
-        }
+        }// TODO: Нужно закрывать работу с базой!
 
         AccountService accountService = new AccountService();
 
