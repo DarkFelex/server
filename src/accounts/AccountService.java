@@ -34,4 +34,12 @@ public class AccountService {
     public void deleteSession(String sessionId) {
         sessionIdToProfile.remove(sessionId);
     }
+
+    public boolean checkActiveSession(String sessionId){
+        System.out.println(sessionIdToProfile.get(sessionId));
+        if (sessionIdToProfile.get(sessionId) == null){
+            return false;
+        }
+        return true;
+    }
 }

@@ -12,6 +12,7 @@ import java.io.IOException;
 public class Frontend extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
+//        // TODO: pageGenerator'ом сделать основной интерфейс игры
 
     }
 

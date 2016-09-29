@@ -8,17 +8,37 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import servlets.Frontend;
 import servlets.SessionsServlet;
 import servlets.UsersServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import chat.WebSocketChatServlet;
 
+import dbService.DBException;
+import dbService.DBService;
+import dbService.dataSets.UsersDataSet;
+
 /**
  * Created by nmikutskiy on 18.09.16.
  */
 public class Main {
     public static void main(String[] args) throws Exception {
+
+        DBService dbService = new DBService();
+        dbService.printConnectInfo();
+        try {
+            long userId = dbService.addUser("user");
+            System.out.println("Added user id: " + userId);
+
+            UsersDataSet dataSet = dbService.getUser(userId);
+            System.out.println("User data set: " + dataSet);
+
+            dbService.cleanUp();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+
         AccountService accountService = new AccountService();
 
         accountService.addNewUser(new UserProfile("test"));
@@ -36,8 +56,9 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
-        context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 
+        context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
+//        todo: добавить вебсокет для системных сообщений
 
         //Для работы со статическими ресурсами
         ResourceHandler resource_handler = new ResourceHandler();
