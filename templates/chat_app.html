@@ -5,8 +5,7 @@
     <script type="text/javascript">
         var ws;
         function init() {
-            ws = new WebSocket("ws://127.0.0.1:8080/chat");
-            <!--ws = new WebSocket("ws://ppl-nmikutskiy-3690508.personal-hosting.yandex.net:80/chat");-->
+            ws = new WebSocket("ws://${host}:${port}/chat");
 
             ws.onopen = function (event) {
             }
@@ -19,8 +18,8 @@
         };
         function sendMessage() {
             var messageField = document.getElementById("message");
-            var userNameField = document.getElementById("username");
-            var message = userNameField.value + ":" + messageField.value;
+            var userNameField = "${name}";
+            var message = userNameField + ":" + messageField.value;
             ws.send(message);
             messageField.value = '';
         }
@@ -30,7 +29,7 @@
 <div id="body">
     <div id="menu">
         <p class="welcome">
-            Welcome, <input id="username" value="anonymous"/>
+            Welcome, <b> ${name}</b>
         </p>
 
         <div style="clear: both"></div>

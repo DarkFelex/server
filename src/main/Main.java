@@ -2,28 +2,28 @@ package main;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import chat.WebSocketChatServlet;
+import dbService.DBException;
+import dbService.DBService;
+import dbService.dataSets.UsersDataSet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.Frontend;
+import servlets.ChatServlet;
 import servlets.SessionsServlet;
-import servlets.UsersServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
-import chat.WebSocketChatServlet;
-
-import dbService.DBException;
-import dbService.DBService;
-import dbService.dataSets.UsersDataSet;
+import servlets.UsersServlet;
 
 /**
  * Created by nmikutskiy on 18.09.16.
  */
 public class Main {
     public static void main(String[] args) throws Exception {
+        config.loadProperties();
 
         DBService dbService = new DBService();
         dbService.printConnectInfo();
@@ -56,6 +56,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new ChatServlet(accountService)), "/chat_app");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений

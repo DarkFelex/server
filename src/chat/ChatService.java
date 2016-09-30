@@ -26,10 +26,13 @@ public class ChatService {
 
     public void add(ChatWebSocket webSocket) {
         webSockets.add(webSocket);
+        System.out.println("New user in the chat. There are " + String.valueOf(webSockets.size()) + " active users.");
+
     }
 
     public void remove(ChatWebSocket webSocket) {
         webSockets.remove(webSocket);
+        System.out.println("User left the chat. There are " + String.valueOf(webSockets.size()) + " active users.");
     }
 
 }
