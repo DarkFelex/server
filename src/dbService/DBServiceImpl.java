@@ -1,5 +1,6 @@
 package dbService;
 
+import base.DBService;
 import dbService.dao.UsersDAO;
 import dbService.dataSets.UsersDataSet;
 import org.h2.jdbcx.JdbcDataSource;
@@ -12,10 +13,10 @@ import java.sql.SQLException;
 /**
  * Created by nmikutskiy on 29.09.16.
  */
-public class DBService {
+public class DBServiceImpl implements DBService {
     private final Connection connection;
 
-    public DBService() {
+    public DBServiceImpl() {
         this.connection = getH2Connection();
     }
 

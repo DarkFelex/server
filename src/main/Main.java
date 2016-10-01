@@ -4,7 +4,8 @@ import accounts.AccountService;
 import accounts.UserProfile;
 import chat.WebSocketChatServlet;
 import dbService.DBException;
-import dbService.DBService;
+import base.DBService;
+import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -25,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         config.loadProperties();
 
-        DBService dbService = new DBService();
+        DBService dbService = new DBServiceImpl();
         dbService.printConnectInfo();
         try {
             long userId = dbService.addUser("user");
