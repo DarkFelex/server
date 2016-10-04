@@ -11,12 +11,12 @@ public class AccountService {
     private final Map<String, UserProfile> sessionIdToProfile;
 
     public AccountService() {
-        loginToProfile = new HashMap<>();
+        loginToProfile = new HashMap<>(); //временно вместо BD
         sessionIdToProfile = new HashMap<>();
     }
 
     public void addNewUser(UserProfile userProfile) {
-        loginToProfile.put(userProfile.getLogin(), userProfile);
+//        loginToProfile.put(userProfile.getLogin(), userProfile);
     }
 
     public UserProfile getUserByLogin(String login) {

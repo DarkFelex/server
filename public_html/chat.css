@@ -1,0 +1,28 @@
+ html, body, .main {min-height:100%;margin: 0;padding: 0;font-size: 100%;}
+ .main {    background: url(http://hdoboi.net/uploads/hd/909944_zamok.jpg) no-repeat 50% 50%;    background-size: cover;}
+ 
+ .fixedBottomMenu {    position: fixed;    bottom: 0;    left: 0;    background: rgba(0,0,0,0.5);    width: 100%;}
+.fixedBottomMenu>* {display: inline-block;}
+.chatButton {    width: 100px;    text-align: center;    border: 1px solid white;    line-height: 25px;    margin: 5px;    color: white;    border-radius: 10px;}
+.chatButton .unread {    font-size: 0.7em;    vertical-align: top;    margin-left: 2px;}
+.chatContent {    width: 400px;    position: absolute;    left: 5px;    bottom: 110%;    background: rgba(0,0,0,0.5);    padding: 5px;}
+.chatBox {    height: 300px;    overflow-x: hidden;    overflow-y: auto; padding:0;}
+.chatInput {    width: 80%;    float: left;}
+.chatSubmitButton {    width: 20%;cursor:pointer;}
+.chatSubmitButton:hover{background: rgba(255, 235, 60, 0.5);}
+.chatInputs>*{background: none;    border: 1px solid white;color:white;box-sizing:border-box;}
+.chatMessage.yellowFadeOut{    animation: newMessages 1s;}
+.chatMessage {    transition:1s; list-style:none;}
+.chatMessage>span {vertical-align: middle;display: inline-block;}
+.messageTime {    color: #FFEB3B;    font-size: 0.9em;    margin-right: 5px;}
+.senderName {    color: #03A9F4;}
+.messageText {    color: #dadada;}
+.chatButton.newMessages{animation: newMessages 1s infinite alternate;}
+@keyframes newMessages {  
+    from {
+      background: rgba(255, 235, 60, 0.5); 
+    }
+    to {
+       background: rgba(0, 0, 0, 0); 
+    }
+  }

@@ -18,6 +18,7 @@ import servlets.SessionsServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import servlets.UsersServlet;
+import servlets.VillageServlet;
 
 /**
  * Created by nmikutskiy on 18.09.16.
@@ -35,7 +36,7 @@ public class Main {
             UsersDataSet dataSet = dbService.getUser(userId);
             System.out.println("User data set: " + dataSet);
 
-            dbService.cleanUp();
+//            dbService.cleanUp();
         } catch (DBException e) {
             e.printStackTrace();
         }// TODO: Нужно закрывать работу с базой!
@@ -55,6 +56,7 @@ public class Main {
          */
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
+        context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/create_village");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
         context.addServlet(new ServletHolder(new ChatServlet(accountService)), "/chat_app");

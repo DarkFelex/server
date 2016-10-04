@@ -1,0 +1,31 @@
+﻿<html>
+	<head>
+		<title>Чат</title>
+		<script src="angular.js"></script>
+		<script type="text/javascript" src="angular-websocket.js"></script>
+		<script type="text/javascript" src="chat.js"></script>
+		<link rel="stylesheet" href="chat.css" type="text/css">
+	</head>
+	<body>
+		<div class="main" ng-app="chat">
+			<div class="fixedBottomMenu">
+			  <div class="chatContainer" ng-controller="ChatController">
+					<div class="chatButton" ng-class="{newMessages: getMessagesCount()>0}" ng-click="toggleVisibility()">Чат<span class="unread" ng-bind="getMessagesCount()"></span></div>
+						<div class="chatContent" ng-show="isVisible">
+							<ul class="chatBox">
+								<li ng-repeat="chatMessage in data" class="chatMessage" ng-class="chatMessage.animation">
+								<span class="messageTime" ng-bind="chatMessage.sendTime"></span>
+								<span class="senderName" ng-bind="chatMessage.name"></span>
+								<span class="messageText" ng-bind="chatMessage.message"></span>
+								</li>
+							</ul>
+							<div class="chatInputs">
+								<input type="text" placeholder="Введите сообщение" class="chatInput" ng-model="chatText">
+								<input type="button" ng-click="sendMessage()" class="chatSubmitButton" value="Отправить">
+							</div>
+						</div>
+					</div>
+			  </div>
+		</div>
+	</body>
+</html>
