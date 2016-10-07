@@ -1,5 +1,7 @@
 package game;
 
+import com.google.gson.Gson;
+
 import java.awt.*;
 
 /**
@@ -29,5 +31,10 @@ public class Place {
     @Override
     public String toString() {
         return String.format("%1$02d|%2$02d", x, y);
+    }
+
+    public String getJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

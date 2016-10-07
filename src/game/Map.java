@@ -42,6 +42,7 @@ public class Map {
             for (int j = 1; j <= SIZE_Y; j++) {
                 mapField[i-1][j-1] = new Place(i, j);
                 System.out.print(mapField[i-1][j-1].toString() + "\t");
+//                System.out.print(mapField[i-1][j-1].getJson() + "\t");
             }
             System.out.println();
         }
