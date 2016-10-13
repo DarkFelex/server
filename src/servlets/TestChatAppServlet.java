@@ -26,8 +26,6 @@ public class TestChatAppServlet extends HttpServlet {
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
 
-        Map<String, Object> pageVariables = createPageVariablesMap(request);
-
         UserProfile profile = accountService.getUserBySessionId(request.getSession().getId());
         if (profile == null) {
             response.setContentType("text/html;charset=utf-8");
@@ -35,6 +33,8 @@ public class TestChatAppServlet extends HttpServlet {
             response.getWriter().println("Unauthorized");
             return;
         }
+
+        Map<String, Object> pageVariables = createPageVariablesMap(request);
         pageVariables.put("name", profile.getLogin());
 
         String path = request.getRequestURI().toString();
@@ -42,12 +42,13 @@ public class TestChatAppServlet extends HttpServlet {
             case "/chat.js":
                 response.getWriter().println(PageGenerator.instance().getPage("chat.js", pageVariables));
                 response.setStatus(HttpServletResponse.SC_OK);
-                return;
+                break;
+            case "/chat_app_agedan":
+                response.getWriter().println(PageGenerator.instance().getPage("chat_app_agedan.html", pageVariables));
+                response.setContentType("text/html;charset=utf-8");
+                response.setStatus(HttpServletResponse.SC_OK);
+                break;
         }
-
-        response.getWriter().println(PageGenerator.instance().getPage("chat_app_agedan.html", pageVariables));
-        response.setContentType("text/html;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     public void doPost(HttpServletRequest request,

@@ -4,48 +4,69 @@ package game;
  * Created by nmikutskiy on 02.10.16.
  */
 public class Map {
+    public static final int SIZE_Y = 25;
+    public static final int SIZE_X = 15;
+
+    private Place[][] mapField = new Place[SIZE_Y][SIZE_X];
+
+    public Map createMapInDB() {
+        return null;
+    }
+
+    public Map getMap() {
+        return null;
+    }
+
+    public Place getPlace(int X, int Y) {
+        return null;
+    }
 
     public static void main(String[] args) {
         Map map = new Map();
         map.generateMap();
-    }
+        map.createVillage(5, 5, "test_user", "new village");
+        map.createVillage(5, 6, "test_user", "new village 2");
 
-    public static final int SIZE_X = 15;
-    public static final int SIZE_Y = 15;
 
-    private Place[][] mapField  = new Place[SIZE_X][SIZE_Y];
-
-    public Map createMapInDB(){
-        return null;
-    }
-
-    public Map getMap(){
-        return null;
-    }
-
-    public Place getPlace(int X, int Y){
-        return null;
+        System.out.println();
+        System.out.println(map.getRegion(5, 5));
+        System.out.println(map.getRegion(5, 6));
     }
 
     public static void generateTestMap() {
-        int[][] mapField  = new int[SIZE_X][SIZE_Y];
-        for (int i = SIZE_X; i > 0; i--) {
-            for (int j = 1; j <= SIZE_Y; j++) {
-                System.out.print(i + "|" + j + "\t");
+        int[][] mapField = new int[SIZE_Y][SIZE_X];
+        for (int i = SIZE_Y; i > 0; i--) {
+            for (int j = 1; j <= SIZE_X; j++) {
+                System.out.print(j + "|" + i + "\t");
             }
             System.out.println();
         }
     }
 
-    public void generateMap(){
-        for (int i = SIZE_X; i > 0; i--) {
-            for (int j = 1; j <= SIZE_Y; j++) {
-                mapField[i-1][j-1] = new Place(i, j);
-                System.out.print(mapField[i-1][j-1].toString() + "\t");
-//                System.out.print(mapField[i-1][j-1].getJson() + "\t");
+    public void generateMap() {// print map
+        for (int i = SIZE_Y; i > 0; i--) {
+            for (int j = 1; j <= SIZE_X; j++) {
+                mapField[i - 1][j - 1] = new Place(i, j);
+//                System.out.print(mapField[i-1][j-1].toString() + "\t");
+                System.out.print(mapField[i - 1][j - 1].getJson() + "\t");
             }
             System.out.println();
         }
     }
 
+    public void createVillage(int x, int y, String ownerUser, String villageName) {
+        mapField[x - 1][y - 1] = new Place(x, y).enableVillageBuildingOnPlace().addPlaceWithVillage(villageName, ownerUser);
+    }
+
+    public String getRegion(int x, int y) {//поменять возврат на Place
+        return mapField[x - 1][y - 1].getJson();
+    }
+
+//    public String getRegion(int x1, int y1, int x2, int y2) {
+//        for (x1, x1 <= x2, x1++) {
+//            for (y1, y1++, y2) {
+//
+//            }
+//        }
+//    }
 }

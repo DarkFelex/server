@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8"/>
+    <title>123</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+	<script type="text/javascript" src="modules/main/angular-websocket.js"></script>
+	<script type="text/javascript" src="modules/main/angular-ui-router.js"></script>
+	<script type="text/javascript" src="modules/app/app.js"></script>
+	<script type="text/javascript" src="modules/app/chat.js"></script>
+	<link rel="stylesheet" href="css/main.css" type="text/css">
+	<link rel="stylesheet" href="css/chat.css" type="text/css">
+	
+	<!--------------------------------------------templates-------------------------------------------------------------------------->
+		
+		
+				<!--------------------------------------------------views/main.html------------------------------------------------------------>
+			<script type="text/ng-template" id="/views/main.html">
+				
+					<div ui-view="content"></div>
+					<div ui-view="chat"></div>
+				
+			</script>
+		<!--------------------------------------------------views/main.html------------------------------------------------------------>
+		
+		
+		<!--------------------------------------------------views/old.html------------------------------------------------------------>
+			<script type="text/ng-template" id="/views/old.html">
+			
+			
+			<b>Authorization</b>
+
+			<form action="/signin" method="POST">
+				Login: <input type="text" name="login"/><br>
+				Password: <input type="password" name="pass"/>
+				<input type="submit" value="Sign in">
+			</form>
+
+
+			<br><br>
+			<b>Registration</b>
+
+			<form action="/signup" method="POST">
+				Login: <input type="text" name="login"/><br>
+				Password: <input type="password" name="pass"/>
+				<input type="submit" value="Sign up">
+			</form>
+
+
+			<br>
+			<a href="/api/v1/sessions">see authorized user parameters</a><br>
+			<br><br><br>
+			<p>Основывай свою деревню</p>
+			<img src="images/village.png" alt="Village preview" style="width:128px;height:128px;">
+			<p>Исследую карту мира</p>
+			<a href="/map" ui-sref="main.map"><img src="images/worldmap.jpg" alt="Village preview" style="width:256px;height:256px;"></a>
+			
+			
+			</script>
+		<!--------------------------------------------------views/old.html------------------------------------------------------------>
+		
+		
+		<!--------------------------------------------------views/map.html------------------------------------------------------------>
+			<script type="text/ng-template" id="/views/map.html">
+				<style type="text/css">
+					.wmap IMG { position: absolute; }
+					.map { left: 50px; top: 250px; z-index: 2; }
+					.village { left: 450px; top: 450px; z-index: 3; }
+					.village1 { left: 455px; top: 720px; z-index: 3; }
+					.village2 { left: 320px; top: 450px; z-index: 3; }
+				</style>
+				<b>This is the worlds map</b>
+				<br><br>
+				<b>01:01/15:15</b>
+				<br>
+				<p class="wmap">
+					<img src="images/worldmap.jpg" alt="Map preview" style="width:1024px;height:1024px;" class="map">
+					<a href="/city.html" ui-sref="main.city"><img src="images/village.png" alt="Village preview" style="width:80px;height:80px;" class="village"></a>
+					<a href="/city.html" ui-sref="main.city"><img src="images/village.png" alt="Village preview" style="width:80px;height:80px;" class="village1"></a>
+					<a href="/city.html" ui-sref="main.city"><img src="images/village.png" alt="Village preview" style="width:80px;height:80px;" class="village2"></a>
+				</p>
+			</script>
+		<!--------------------------------------------------views/map.html------------------------------------------------------------>
+		
+		<!--------------------------------------------------views/city.html------------------------------------------------------------>
+			<script type="text/ng-template" id="/views/city.html">
+				<b>Village inside</b>
+				<br><br>
+				<b>12:05</b>
+				<br>
+				<a href="/map.html" ui-sref="main.map">go to map</a>
+				<br>
+				<img src="images/city.jpg" alt="Map preview" style="width:1024px;height:1024px;">
+			</script>
+		<!--------------------------------------------------views/city.html------------------------------------------------------------>
+		
+		<!--------------------------------------------------views/chat.html------------------------------------------------------------>
+			<script type="text/ng-template" id="/views/chat.html">
+		<div class="main" >
+			<div class="fixedBottomMenu">
+			  <div class="chatContainer" ng-controller="ChatController">
+					<div class="chatButton" ng-class="{newMessages: getMessagesCount()>0}" ng-click="toggleVisibility()">Чат<span class="unread" ng-bind="getMessagesCount()"></span></div>
+						<div class="chatContent" ng-show="isVisible">
+							<ul class="chatBox">
+								<li ng-repeat="chatMessage in data" class="chatMessage" ng-class="chatMessage.animation">
+								<span class="messageTime" ng-bind="chatMessage.sendTime"></span>
+								<span class="senderName" ng-bind="chatMessage.name"></span>
+								<span class="messageText" ng-bind="chatMessage.message"></span>
+								</li>
+							</ul>
+							<div class="chatInputs">
+								<input type="text" placeholder="Введите сообщение" class="chatInput" ng-model="chatText">
+								<input type="button" ng-click="sendMessage()" class="chatSubmitButton" value="Отправить">
+							</div>
+						</div>
+					</div>
+			  </div>
+		</div>
+				
+			</script>
+		<!--------------------------------------------------views/chat.html------------------------------------------------------------>
+		
+		<!--/templates-->
+
+
+	</head>
+	<body>
+<div ui-view="mainView"></div>
+</body>
+</html>

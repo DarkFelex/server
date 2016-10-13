@@ -11,13 +11,13 @@ import java.util.Properties;
 public class config {
     private static String host;
     private static String chatPort;
-    private static String port;
+    private static int port;
 
     public static String getHost(){
         return host;
     }
 
-    public static String getPort(){
+    public static int getPort(){
         return port;
     }
 
@@ -36,7 +36,7 @@ public class config {
             System.err.println("Error: properties file is not exists");
         }
         host = property.getProperty("host");
-        port = property.getProperty("port");
+        port = Integer.valueOf(property.getProperty("port"));
         chatPort = property.getProperty("chat.port");
 
         System.out.println("HOST: " + host

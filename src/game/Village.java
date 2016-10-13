@@ -1,5 +1,7 @@
 package game;
 
+import com.google.gson.Gson;
+
 import java.awt.*;
 
 /**
@@ -9,6 +11,7 @@ public class Village {
     private int x;
     private int y;
     private String ownerUser;
+    private String villageName;
     private Image villageImageInTheMap;
     private Image villageImageInside;
 
@@ -16,9 +19,20 @@ public class Village {
 //        throw new Exception();
     }
 
-    public Village(int x, int y, String ownerUser){
+    public Village(int x, int y, String ownerUser, String villageName){
         this.x = x;
         this.y = y;
         this.ownerUser = ownerUser;
+        this.villageName = villageName;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Village: %s, on: %1$02d|%2$02d, owner: %s", villageName, x, y, ownerUser);
+    }
+
+    public String getJson(){
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }

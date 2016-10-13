@@ -28,6 +28,13 @@ public class Place {
         this.y = y;
     }
 
+    public Place addPlaceWithVillage(String villageName, String user) {
+        if (isPlaceForVillage){
+            this.village = new Village(this.x, this.y, user, villageName);
+        }
+        return this;
+    }
+
     @Override
     public String toString() {
         return String.format("%1$02d|%2$02d", x, y);
@@ -36,5 +43,10 @@ public class Place {
     public String getJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public Place enableVillageBuildingOnPlace(){
+        this.isPlaceForVillage = true;
+        return this;
     }
 }

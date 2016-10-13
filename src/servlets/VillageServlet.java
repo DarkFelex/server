@@ -48,9 +48,9 @@ public class VillageServlet extends HttpServlet {
 
     }
 
-    private Village createVillage(int x, int y, String ownerUser){
+    private Village createVillage(int x, int y, String ownerUser, String villageName){
         // TODO: проверить: 1) достаточно ресурсов 2) на клетке можно строить
         // TODO: записать в базу данных на карте
-        return new Village(x, y, ownerUser);
+        return new Village(x, y, ownerUser, villageName);
     }
 }
