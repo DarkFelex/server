@@ -61,7 +61,6 @@ public class Main {
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
         context.addServlet(new ServletHolder(new ChatServlet(accountService)), "/chat_app");
-        context.addServlet(new ServletHolder(new TestChatAppServlet(accountService)), "/chat_app_agedan");
         context.addServlet(new ServletHolder(new TestChatAppServlet(accountService)), "/chat.js");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
@@ -79,7 +78,7 @@ public class Main {
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
 
-        Server server = new Server(8081);
+        Server server = new Server(config.getPort());
         server.setHandler(handlers);
 
         server.start();
