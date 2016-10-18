@@ -14,6 +14,7 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.ChatServlet;
+import servlets.Frontend;
 import servlets.SessionsServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
@@ -60,11 +61,11 @@ public class Main {
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/create_village");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
-        context.addServlet(new ServletHolder(new ChatServlet(accountService)), "/chat_app");
-        context.addServlet(new ServletHolder(new TestChatAppServlet(accountService)), "/chat.js");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений
+
+        context.addServlet(new ServletHolder(new Frontend(accountService)), "/views/*");
 
         //Для работы со статическими ресурсами
         ResourceHandler resource_handler = new ResourceHandler();

@@ -45,7 +45,7 @@ public class TestChatAppServlet extends HttpServlet {
                 break;
             case "/chat_app_agedan":
                 response.getWriter().println(PageGenerator.instance().getPage("chat_app_agedan.html", pageVariables));
-                response.setContentType("text/html;charset=utf-8");
+                response.setContentType("text/html; charset=UTF-8");
                 response.setStatus(HttpServletResponse.SC_OK);
                 break;
         }
