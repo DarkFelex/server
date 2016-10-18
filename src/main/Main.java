@@ -59,6 +59,7 @@ public class Main {
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/create_village");
+        context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/get_village");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
 
