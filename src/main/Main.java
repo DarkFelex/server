@@ -17,6 +17,7 @@ import servlets.ChatServlet;
 import servlets.Frontend;
 import servlets.SessionsServlet;
 import servlets.SignInServlet;
+import servlets.SignOutServlet;
 import servlets.SignUpServlet;
 import servlets.TestChatAppServlet;
 import servlets.UsersServlet;
@@ -62,6 +63,8 @@ public class Main {
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/get_village");
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignOutServlet(accountService)), "/signout");
+
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений
