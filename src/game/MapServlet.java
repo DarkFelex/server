@@ -27,6 +27,19 @@ public class MapServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
+
+        String path = request.getPathInfo();
+        switch (path) {
+            case "/api/v1/get_location":
+                // TODO: get single square from map
+                break;
+            case "/api/v1/get_region":
+                // TODO: get reqion
+                break;
+            default:
+                // TODO: send error response
+                break;
+        }
     }
 
 }
