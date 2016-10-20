@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -38,5 +39,7 @@ public class PageGenerator {
 
     private PageGenerator() {
         cfg = new Configuration();
+        cfg.setDefaultEncoding("UTF-8");
+        cfg.setOutputEncoding("UTF-8");
     }
 }
