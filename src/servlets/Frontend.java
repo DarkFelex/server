@@ -36,29 +36,34 @@ public class Frontend extends HttpServlet {
         String path = request.getRequestURI().toString();
         switch (path){
             case "/views/chat.html":
+                response.setContentType("text/html; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().println(PageGenerator.instance().getPage("views/chat.html", pageVariables));
                 break;
             case "/views/city.html":
+                response.setContentType("text/html; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().println(PageGenerator.instance().getPage("views/city.html", pageVariables));
                 break;
             case "/views/main.html":
+                response.setContentType("text/html; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().println(PageGenerator.instance().getPage("views/main.html", pageVariables));
                 break;
             case "/views/map.html":
+                response.setContentType("text/html; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().println(PageGenerator.instance().getPage("views/map.html", pageVariables));
                 break;
             case "/views/old.html":
+                response.setContentType("text/html; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_OK);
                 response.getWriter().println(PageGenerator.instance().getPage("views/old.html", pageVariables));
                 break;
             default:
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
         }
-        response.setContentType("text/html; charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-
-
-
     }
 
     public void doPost(HttpServletRequest request,
