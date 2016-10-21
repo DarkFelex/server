@@ -12,6 +12,7 @@ import java.awt.*;
 public class Place {
     private final int x;
     private final int y;
+    private final int regionId;
     private boolean isPlaceForVillage;
     private Village village;
     private Object resources;
@@ -21,14 +22,16 @@ public class Place {
     private Place() {
         x = -1;
         y = -1;
+        regionId = -1;
     }
 
-    public Place(int x, int y) {
+    public Place(int x, int y, int regionId) {
         this.x = x;
         this.y = y;
+        this.regionId = regionId;
     }
 
-    public Place addPlaceWithVillage(String villageName, String user) {
+    public Place addVillageOnPlace(String villageName, String user) {
         if (isPlaceForVillage){
             this.village = new Village(this.x, this.y, user, villageName);
         }
@@ -37,7 +40,7 @@ public class Place {
 
     @Override
     public String toString() {
-        return String.format("%1$02d|%2$02d", x, y);
+        return String.format("regionId=%d %1$02d|%2$02d", regionId, x, y);
     }
 
     public String getJson(){
