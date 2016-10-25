@@ -31,11 +31,11 @@ public class DBServiceImpl implements DBService {
     public long addUser(String name) throws DBException {
         try {
             connection.setAutoCommit(false);
-            UsersDAO dao = new UsersDAO(connection);
-            dao.createTable();
-            dao.insertUser(name);
+            UsersDAO usersDao = new UsersDAO(connection);
+            usersDao.createTable();
+            usersDao.insertUser(name);
             connection.commit();
-            return dao.getUserId(name);
+            return usersDao.getUserId(name);
         } catch (SQLException e) {
             try {
                 connection.rollback();

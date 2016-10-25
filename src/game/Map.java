@@ -10,6 +10,7 @@ public class Map {
     private Place[][] mapField = new Place[SIZE_Y][SIZE_X];
 
     public Map createMapInDB() {
+
         return null;
     }
 
@@ -46,7 +47,7 @@ public class Map {
     public void generateMap() {// print map
         for (int i = SIZE_Y; i > 0; i--) {
             for (int j = 1; j <= SIZE_X; j++) {
-                mapField[i - 1][j - 1] = new Place(i, j);
+                mapField[i - 1][j - 1] = new Place(i, j, 0);
 //                System.out.print(mapField[i-1][j-1].toString() + "\t");
                 System.out.print(mapField[i - 1][j - 1].getJson() + "\t");
             }
@@ -55,7 +56,7 @@ public class Map {
     }
 
     public void createVillage(int x, int y, String ownerUser, String villageName) {
-        mapField[x - 1][y - 1] = new Place(x, y).enableVillageBuildingOnPlace().addPlaceWithVillage(villageName, ownerUser);
+        mapField[x - 1][y - 1] = new Place(x, y, 0).enableVillageBuildingOnPlace().addVillageOnPlace(villageName, ownerUser);
     }
 
     public String getRegion(int x, int y) {//поменять возврат на Place

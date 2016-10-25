@@ -61,6 +61,7 @@ public class Frontend extends HttpServlet {
                 response.getWriter().println(PageGenerator.instance().getPage("views/old.html", pageVariables));
                 break;
             default:
+                response.setContentType("text/html; charset=UTF-8");
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 return;
         }

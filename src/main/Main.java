@@ -2,11 +2,13 @@ package main;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import base.GameService;
 import chat.WebSocketChatServlet;
 import dbService.DBException;
 import base.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
+import game.GameServiceImpl;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -48,6 +50,9 @@ public class Main {
 
         accountService.addNewUser(new UserProfile("test"));
 
+        GameService gameService = new GameServiceImpl();
+        gameService.createMapInDB();
+
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         /**
          * Запрос, который пришёл на указанный ресурс будет собран в объеки
@@ -61,15 +66,15 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/create_village");
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/get_village");
+
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
         context.addServlet(new ServletHolder(new SignOutServlet(accountService)), "/signout");
 
+        context.addServlet(new ServletHolder(new Frontend(accountService)), "/views/*");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений
-
-        context.addServlet(new ServletHolder(new Frontend(accountService)), "/views/*");
 
         //Для работы со статическими ресурсами
         ResourceHandler resource_handler = new ResourceHandler();
