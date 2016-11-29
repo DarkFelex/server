@@ -9,6 +9,7 @@ import base.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 import game.GameServiceImpl;
+import game.MapServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -66,6 +67,8 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/create_village");
         context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/get_village");
+        context.addServlet(new ServletHolder(new MapServlet(accountService)), "/api/v1/get_location");
+        context.addServlet(new ServletHolder(new MapServlet(accountService)), "/api/v1/get_region");
 
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
