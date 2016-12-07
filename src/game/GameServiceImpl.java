@@ -11,7 +11,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public Map createMapInDB() {
-        return map.createMapInDB();
+        return map.saveMapInDB();
     }
 
 }
