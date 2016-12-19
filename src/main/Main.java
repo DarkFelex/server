@@ -52,7 +52,7 @@ public class Main {
         accountService.addNewUser(new UserProfile("test"));
 
         GameService gameService = new GameServiceImpl();
-        gameService.createMapInDB();
+        gameService.createCleanMap();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         /**
@@ -65,9 +65,7 @@ public class Main {
          */
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
-        context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/create_village");
-        context.addServlet(new ServletHolder(new VillageServlet(accountService)), "/api/v1/get_village");
-        context.addServlet(new ServletHolder(new MapServlet(accountService)), "/api/v1/get_location");
+        context.addServlet(new ServletHolder(new VillageServlet(accountService, gameService)), "/api/v1/village");
         context.addServlet(new ServletHolder(new MapServlet(accountService)), "/api/v1/get_region");
 
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");

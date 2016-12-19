@@ -19,6 +19,14 @@ public class Place {
     private Object army;
     private Image placeImage;
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     private Place() {
         x = -1;
         y = -1;
@@ -33,6 +41,7 @@ public class Place {
 
     public Place addVillageOnPlace(String villageName, String user) {
         if (isPlaceForVillage){
+            //Проверки на возможность строить делаются в сервлете
             this.village = new Village(this.x, this.y, user, villageName);
         }
         return this;
@@ -51,5 +60,9 @@ public class Place {
     public Place enableVillageBuildingOnPlace(){
         this.isPlaceForVillage = true;
         return this;
+    }
+
+    public Village getVillage(){
+        return this.village;
     }
 }

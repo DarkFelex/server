@@ -30,10 +30,10 @@ public class MapServlet extends HttpServlet {
 
         String path = request.getPathInfo();
         switch (path) {
-            case "/api/v1/get_location":
+            case "/api/v1/get_region":
                 // TODO: get single square from map
                 break;
-            case "/api/v1/get_region":
+            case "/api/v1/get_region/all":
                 // TODO: get reqion
                 break;
             default:
