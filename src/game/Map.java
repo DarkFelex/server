@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import static java.lang.String.format;
 
@@ -12,7 +13,7 @@ public class Map {
     private int sizeX;
     private int sizeY;
     private String mapName;
-    private HashMap<String, Place> map = new HashMap<String, Place>(sizeX * sizeY);
+    private HashMap<String, Place> map = new HashMap<String, Place>();
 
     private Map(){
 
@@ -37,6 +38,20 @@ public class Map {
 
     public Place getPlace(int x, int y){
         return map.get(format("%d-%d", x, y));
+    }
+
+    public Map fillRandomPlaces(){
+        int sX = 1;
+        int sY = 1;
+        while (sX <= sizeX){
+            for (; sY <= sizeY; sY++ ){
+                    map.put(String.format("%d-%d", sX, sY), new Place(sX, sY, 1));
+//                System.out.println(sX + " " + sY);
+                }
+            sX += 1;
+            sY = 1;
+            }
+        return this;
     }
 
 }

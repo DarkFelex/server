@@ -43,13 +43,14 @@ public class Place {
         if (isPlaceForVillage){
             //Проверки на возможность строить делаются в сервлете
             this.village = new Village(this.x, this.y, user, villageName);
-        }
+            System.out.println("Create village: " + this.village.toString());
+        } else System.out.println(String.format("Impossible to create new village on: %d-%d", this.getX(), this.getY()));
         return this;
     }
 
     @Override
     public String toString() {
-        return String.format("regionId=%d %1$02d|%2$02d", regionId, x, y);
+        return String.format("regionId=%d %d-%d", regionId, x, y);
     }
 
     public String getJson(){

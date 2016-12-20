@@ -46,7 +46,7 @@ public class Village {
 
     @Override
     public String toString() {
-        return String.format("Village: %s, on: %1$02d|%2$02d, owner: %s", villageName, x, y, ownerUser);
+        return String.format("Village: %s, on: %d-%d, owner: %s", villageName, x, y, ownerUser);
     }
 
     public String getJson(){

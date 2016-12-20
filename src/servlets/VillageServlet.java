@@ -32,7 +32,7 @@ public class VillageServlet extends HttpServlet {
             return;
         }
 
-        String path = request.getPathInfo();
+        String path = request.getRequestURI().toString();
         switch (path) {
             case "/api/v1/village/get":
                 // TODO: get village by user name
@@ -53,7 +53,7 @@ public class VillageServlet extends HttpServlet {
             return;
         }
 
-        String path = request.getPathInfo();
+        String path = request.getRequestURI().toString();
         switch (path) {
             case "/api/v1/village/create":
                 String x = request.getParameter("x");
@@ -81,12 +81,14 @@ public class VillageServlet extends HttpServlet {
 
     private Village createVillage(int x, int y, UserProfile ownerUser, String villageName){
         //проверяем: 1) достаточно ресурсов 2) на клетке можно строить
-
         if (ownerUser.getScore() >= 10000 && ownerUser.getGold() >= 300){
             ownerUser.setGold(ownerUser.getGold() - 300);
             ownerUser.setScore(ownerUser.getScore() - 10000);
             return gameService.createVillage(new Village(x, y, ownerUser.getLogin(), villageName));
         }
-        else return null;
+        else {
+            System.out.println("Can not create village: score or gold is missing");
+            return null;
+        }
     }
 }

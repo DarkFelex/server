@@ -9,6 +9,7 @@ import base.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 import game.GameServiceImpl;
+import game.Map;
 import game.MapServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -52,7 +53,8 @@ public class Main {
         accountService.addNewUser(new UserProfile("test"));
 
         GameService gameService = new GameServiceImpl();
-        gameService.createCleanMap();
+        gameService.createCleanMap("FirstMap", 30, 15).fillRandomPlaces();
+        gameService.getRegionOnTheMap(1,2).enableVillageBuildingOnPlace();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         /**
@@ -65,8 +67,8 @@ public class Main {
          */
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
-        context.addServlet(new ServletHolder(new VillageServlet(accountService, gameService)), "/api/v1/village");
-        context.addServlet(new ServletHolder(new MapServlet(accountService)), "/api/v1/get_region");
+        context.addServlet(new ServletHolder(new VillageServlet(accountService, gameService)), "/api/v1/village/*");
+        context.addServlet(new ServletHolder(new MapServlet(accountService, gameService)), "/api/v1/get_region");
 
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
