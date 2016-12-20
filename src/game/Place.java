@@ -19,6 +19,14 @@ public class Place {
     private Object army;
     private Image placeImage;
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     private Place() {
         x = -1;
         y = -1;
@@ -33,14 +41,16 @@ public class Place {
 
     public Place addVillageOnPlace(String villageName, String user) {
         if (isPlaceForVillage){
+            //Проверки на возможность строить делаются в сервлете
             this.village = new Village(this.x, this.y, user, villageName);
-        }
+            System.out.println("Create village: " + this.village.toString());
+        } else System.out.println(String.format("Impossible to create new village on: %d-%d", this.getX(), this.getY()));
         return this;
     }
 
     @Override
     public String toString() {
-        return String.format("regionId=%d %1$02d|%2$02d", regionId, x, y);
+        return String.format("regionId=%d %d-%d", regionId, x, y);
     }
 
     public String getJson(){
@@ -51,5 +61,9 @@ public class Place {
     public Place enableVillageBuildingOnPlace(){
         this.isPlaceForVillage = true;
         return this;
+    }
+
+    public Village getVillage(){
+        return this.village;
     }
 }

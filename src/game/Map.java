@@ -1,74 +1,57 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import static java.lang.String.format;
+
 /**
  * Created by nmikutskiy on 02.10.16.
  */
 public class Map {
-    public static final int SIZE_X = 3;
-    public static final int SIZE_Y = 2;
+    private int sizeX;
+    private int sizeY;
+    private String mapName;
+    private HashMap<String, Place> map = new HashMap<String, Place>();
 
-    private Place[][] mapField = new Place[SIZE_Y][SIZE_X];
+    private Map(){
 
-    public Map saveMapInDB() {
-// TODO: записать в базу сгенерированную карту целиком
-        return null;
+    }
+    public Map(String mapName, int sizeX, int sizeY) {
+        if (mapName != null && mapName.trim() != "" && sizeX > 0 && sizeY > 0) {
+            this.mapName = mapName;
+            this.sizeX = sizeX;
+            this.sizeY = sizeY;
+            System.out.println(format("Map %s (%d/%d) is created successfully!", mapName, sizeX, sizeY));
+        }else System.out.println(format("ERROR! Map %s (%d/%d) is not created!", mapName, sizeX, sizeY));
     }
 
-    public Map getMap() {
-        return null;
-    }
-
-    public Place getPlace(int X, int Y) {
-        return null;
-    }
-
-    public static void main(String[] args) {
-        Map map = new Map();
-        map.createCleanMap();
-
-        map.createVillage(5, 5, "test_user", "new village");
-        map.createVillage(5, 6, "test_user", "new village 2");
-
-
-        System.out.println();
-        System.out.println(map.getRegion(5, 5));
-        System.out.println(map.getRegion(5, 6));
-    }
-
-    public static void generateTestMap() {
-        int[][] mapField = new int[SIZE_Y][SIZE_X];
-        for (int i = SIZE_Y; i > 0; i--) {
-            for (int j = 1; j <= SIZE_X; j++) {
-                System.out.print(j + "|" + i + "\t");
-            }
-            System.out.println();
+    public boolean setPlace(Place place){
+        if (place.getX() > 0 && place.getX() <= sizeX
+                && place.getY() > 0 && place.getY() <= sizeY){
+            map.put(format("%d-%d", place.getX(), place.getY()), place);
+            return true;
         }
+        return false;
     }
 
-    public void createCleanMap() {// print map
-        for (int i = SIZE_Y; i > 0; i--) {
-            for (int j = 1; j <= SIZE_X; j++) {
-                mapField[i - 1][j - 1] = new Place(i, j, 0);
-//                System.out.print(mapField[i-1][j-1].toString() + "\t");
-                System.out.print(mapField[i - 1][j - 1].getJson() + "\t");
+    public Place getPlace(int x, int y){
+        return map.get(format("%d-%d", x, y));
+    }
+
+    public Map fillRandomPlaces(){
+        int sX = 1;
+        int sY = 1;
+        while (sX <= sizeX){
+            for (; sY <= sizeY; sY++ ){
+                    map.put(String.format("%d-%d", sX, sY), new Place(sX, sY, 1));
+//                System.out.println(sX + " " + sY);
+                }
+            sX += 1;
+            sY = 1;
             }
-            System.out.println();
-        }
+        return this;
     }
 
-    public void createVillage(int x, int y, String ownerUser, String villageName) {
-        mapField[x - 1][y - 1] = new Place(x, y, 0).enableVillageBuildingOnPlace().addVillageOnPlace(villageName, ownerUser);
-    }
-
-    public String getRegion(int x, int y) {//поменять возврат на Place
-        return mapField[x - 1][y - 1].getJson();
-    }
-
-//    public String getRegion(int x1, int y1, int x2, int y2) {
-//        for (x1, x1 <= x2, x1++) {
-//            for (y1, y1++, y2) {
-//
-//            }
-//        }
-//    }
 }

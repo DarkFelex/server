@@ -9,8 +9,26 @@ import java.awt.*;
  */
 public class Village {
     private int x;
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     private int y;
     private String ownerUser;
+
+    public String getOwnerUser() {
+        return ownerUser;
+    }
+
+    public String getVillageName() {
+        return villageName;
+    }
+
     private String villageName;
     private Image villageImageInTheMap;
     private Image villageImageInside;
@@ -28,7 +46,7 @@ public class Village {
 
     @Override
     public String toString() {
-        return String.format("Village: %s, on: %1$02d|%2$02d, owner: %s", villageName, x, y, ownerUser);
+        return String.format("Village: %s, on: %d-%d, owner: %s", villageName, x, y, ownerUser);
     }
 
     public String getJson(){
