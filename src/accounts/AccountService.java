@@ -17,6 +17,7 @@ public class AccountService {
 
     public void addNewUser(UserProfile userProfile) {
         loginToProfile.put(userProfile.getLogin(), userProfile);
+        System.out.println(String.format("addNewUser: %s", userProfile.getLogin()));
     }
 
     public UserProfile getUserByLogin(String login) {
@@ -29,11 +30,12 @@ public class AccountService {
 
     public void addSession(String sessionId, UserProfile userProfile) {
         sessionIdToProfile.put(sessionId, userProfile);
-        System.out.println(String.format("%s:%s", userProfile.getLogin(), sessionId));
+        System.out.println(String.format("addSession: %s:%s", userProfile.getLogin(), sessionId));
     }
 
     public void deleteSession(String sessionId) {
         sessionIdToProfile.remove(sessionId);
+        System.out.println(String.format("deleteSession: %s", sessionId));
     }
 
     public boolean checkActiveSession(String sessionId){
@@ -42,5 +44,13 @@ public class AccountService {
             return false;
         }
         return true;
+    }
+
+    public void getAllActiveUsers(){
+//TODO: ручка для просмотра всех активных пользователей
+    }
+
+    public void getAllActiveSessions(){
+//TODO: админская ручка для просмотра всех активных сессий
     }
 }
