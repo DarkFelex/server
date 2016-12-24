@@ -3,6 +3,7 @@ package game;
 import com.google.gson.Gson;
 
 import java.awt.*;
+import java.util.Set;
 
 /**
  * Created by nmikutskiy on 02.10.16.
@@ -15,6 +16,7 @@ public class Village {
     private String villageImageInTheMapUrl;
     private String villageImageInsideUrl;
     private int villageLevel = 0;
+    private Object[] units;
 
     private Village(){
 //        throw new Exception();
