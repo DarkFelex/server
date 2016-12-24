@@ -84,7 +84,7 @@ public class VillageServlet extends HttpServlet {
         if (ownerUser.getScore() >= 10000 && ownerUser.getGold() >= 300){
             ownerUser.setGold(ownerUser.getGold() - 300);
             ownerUser.setScore(ownerUser.getScore() - 10000);
-            return gameService.createVillage(new Village(x, y, ownerUser.getLogin(), villageName));
+            return gameService.createVillage(x, y, ownerUser.getLogin(), villageName);
         }
         else {
             System.out.println("Can not create village: score or gold is missing");
