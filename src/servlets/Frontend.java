@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by nmikutskiy on 18.09.16.
@@ -34,6 +38,18 @@ public class Frontend extends HttpServlet {
         pageVariables.put("sessionId", request.getSession().getId());
 
         String path = request.getRequestURI().toString();
+        if (path.contains("/images/map/region/")){
+            List<String> imgName = Stream.of(path.split("/")).filter(s -> s.contains("-")).collect(Collectors.toList());
+            System.out.println(imgName);
+            pageVariables.put("regionId", "1");
+            pageVariables.put("imgName", imgName.get(0));
+
+            response.setContentType("text/html; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().println(PageGenerator.instance().getPage("map_place_img.html", pageVariables));
+            return;
+        }
+
         switch (path){
             case "/views/chat.html":
                 response.setContentType("text/html; charset=UTF-8");

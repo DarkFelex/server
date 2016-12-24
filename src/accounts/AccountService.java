@@ -30,7 +30,7 @@ public class AccountService {
 
     public void addSession(String sessionId, UserProfile userProfile) {
         sessionIdToProfile.put(sessionId, userProfile);
-        System.out.println(String.format("addSession: %s:%s", userProfile.getLogin(), sessionId));
+        System.out.println(String.format("addSession: %s[%s]", userProfile.getLogin(), sessionId));
     }
 
     public void deleteSession(String sessionId) {

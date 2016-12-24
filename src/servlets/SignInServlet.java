@@ -38,7 +38,6 @@ public class SignInServlet extends HttpServlet {
         }
 
         accountService.addSession(request.getSession().getId(), profile);
-        System.out.println(String.format("User %s is logged in", login));
 
         response.setContentType("text/html;charset=utf-8");
         response.getWriter().println("Authorized: " + profile.getLogin());

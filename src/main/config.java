@@ -32,8 +32,9 @@ public class config {
         try {
             fileInputStream = new FileInputStream("resources" + File.separator + "config.properties");
             property.load(fileInputStream);
+            System.out.println("Properties file is loaded");
         } catch (IOException e) {
-            System.err.println("Error: properties file is not exists");
+            System.out.println("Error: properties file is not exists");
         }
         host = property.getProperty("host");
         port = Integer.valueOf(property.getProperty("port"));

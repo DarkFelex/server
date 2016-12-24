@@ -9,29 +9,12 @@ import java.awt.*;
  */
 public class Village {
     private int x;
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
     private int y;
     private String ownerUser;
-
-    public String getOwnerUser() {
-        return ownerUser;
-    }
-
-    public String getVillageName() {
-        return villageName;
-    }
-
     private String villageName;
-    private Image villageImageInTheMap;
-    private Image villageImageInside;
+    private String villageImageInTheMapUrl;
+    private String villageImageInsideUrl;
+    private int villageLevel = 0;
 
     private Village(){
 //        throw new Exception();
@@ -42,6 +25,8 @@ public class Village {
         this.y = y;
         this.ownerUser = ownerUser;
         this.villageName = villageName;
+        this.villageImageInTheMapUrl = "images/village.png";
+        this.villageImageInsideUrl = "images/city.jpg";
     }
 
     @Override
@@ -52,5 +37,45 @@ public class Village {
     public String getJson(){
         Gson gson = new Gson();
         return gson.toJson(this);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public String getOwnerUser() {
+        return ownerUser;
+    }
+
+    public String getVillageName() {
+        return villageName;
+    }
+
+    public String getVillageImageInTheMapUrl() {
+        return villageImageInTheMapUrl;
+    }
+
+    public void setVillageImageInTheMapUrl(String villageImageInTheMapUrl) {
+        this.villageImageInTheMapUrl = villageImageInTheMapUrl;
+    }
+
+    public String getVillageImageInsideUrl() {
+        return villageImageInsideUrl;
+    }
+
+    public void setVillageImageInsideUrl(String villageImageInsideUrl) {
+        this.villageImageInsideUrl = villageImageInsideUrl;
+    }
+
+    public int getVillageLevel() {
+        return villageLevel;
+    }
+
+    public void setVillageLevel(int villageLevel) {
+        this.villageLevel = villageLevel;
     }
 }
