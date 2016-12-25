@@ -75,6 +75,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SignOutServlet(accountService)), "/signout");
 
         context.addServlet(new ServletHolder(new Frontend(accountService)), "/views/*");
+        context.addServlet(new ServletHolder(new Frontend(accountService)), "/images/map/region/*");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений

@@ -14,18 +14,10 @@ public class Place {
     private final int y;
     private final int regionId;
     private boolean isPlaceForVillage;
+    private String placeImageUrl;
     private Village village;
     private Object resources;
     private Object army;
-    private Image placeImage;
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 
     private Place() {
         x = -1;
@@ -37,6 +29,23 @@ public class Place {
         this.x = x;
         this.y = y;
         this.regionId = regionId;
+        this.setPlaceImageUrl(String.format("images/map/region/%d/%d-%d.img", 1, x, y));
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public String getPlaceImageUrl() {
+        return placeImageUrl;
+    }
+
+    public void setPlaceImageUrl(String placeImageUrl) {
+        this.placeImageUrl = placeImageUrl;
     }
 
     public Place addVillageOnPlace(String villageName, String user) {
