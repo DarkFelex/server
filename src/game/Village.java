@@ -1,8 +1,9 @@
 package game;
 
 import com.google.gson.Gson;
+import game.buildings.Build;
 
-import java.awt.*;
+import java.util.HashMap;
 
 /**
  * Created by nmikutskiy on 02.10.16.
@@ -15,6 +16,8 @@ public class Village {
     private String villageImageInTheMapUrl;
     private String villageImageInsideUrl;
     private int villageLevel = 0;
+    private HashMap<Integer, Build> areaForBuildings = new HashMap<>(11);
+    private Object[] units;
 
     private Village(){
 //        throw new Exception();
@@ -77,5 +80,18 @@ public class Village {
 
     public void setVillageLevel(int villageLevel) {
         this.villageLevel = villageLevel;
+    }
+
+    /**
+     * Чтобы получить все клетки со зданиями или без
+     * @return
+     */
+    public HashMap<Integer, Build> getAreaForBuildings() {
+        return areaForBuildings;
+    }
+
+    public void setBuildOnAreaForBuildings(Integer areaNumber, Build build) {
+        if (this.areaForBuildings.get(areaNumber) != null) return;
+        getAreaForBuildings().put(areaNumber, build);
     }
 }

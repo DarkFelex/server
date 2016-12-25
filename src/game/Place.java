@@ -16,8 +16,8 @@ public class Place {
     private boolean isPlaceForVillage;
     private String placeImageUrl;
     private Village village;
-    private Object resources;
-    private Object army;
+    private Object[] resources;
+    private Object[] units;
 
     private Place() {
         x = -1;
