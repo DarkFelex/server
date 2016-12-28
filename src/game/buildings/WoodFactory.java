@@ -3,16 +3,16 @@ package game.buildings;
 import static game.buildings.BuildType.INDUSTRY;
 
 /**
- * Created by nmikutskiy on 24.12.16.
+ * Created by nmikutskiy on 28.12.16.
  */
-public class Farm extends Build {
-    public Farm(){
-        setBuildName("Farm");
+public class WoodFactory extends Build {
+    public WoodFactory(){
+        setBuildName("Wood Factory");
         setBuildType(INDUSTRY);
         setBuildLevel(0);
-        setGoldToBuild(5);
-        setHp(150);
-        setImgUrl("images/building/farm.img");
+        setGoldToBuild(30);
+        setHp(70);
+        setImgUrl("images/building/woodfactory.img");
     }
     @Override
     public boolean startBuild() {

@@ -12,6 +12,7 @@ public class Warehouse extends Build {
         setBuildLevel(0);
         setGoldToBuild(20);
         setHp(50);
+        setImgUrl("images/building/warehouse.img");
     }
     @Override
     public boolean startBuild() {

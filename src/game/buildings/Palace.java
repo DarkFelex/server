@@ -12,6 +12,7 @@ public class Palace extends Build {
         setBuildLevel(0);
         setGoldToBuild(50);
         setHp(12000);
+        setImgUrl("images/building/palace.img");
     }
     @Override
     public boolean startBuild() {

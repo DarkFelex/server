@@ -6,6 +6,7 @@ package game.buildings;
 public abstract class Build {
     private String buildName;
     private BuildType buildType;
+    private String imgUrl;
     private int hp;
     private int buildLevel;
     private int goldToBuild;
@@ -48,6 +49,14 @@ public abstract class Build {
 
     public void setHp(int hp) {
         this.hp = hp;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public abstract boolean startBuild();

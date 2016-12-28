@@ -37,7 +37,7 @@ public class Main {
         DBService dbService = new DBServiceImpl();
         dbService.printConnectInfo();
         try {
-            long userId = dbService.addUser("user");
+            long userId = dbService.addUser("user"); // юзер в базе
             System.out.println("Added user id: " + userId);
 
             UsersDataSet dataSet = dbService.getUser(userId);
@@ -50,7 +50,7 @@ public class Main {
 
         AccountService accountService = new AccountService();
 
-        accountService.addNewUser(new UserProfile("test"));
+        accountService.addNewUser(new UserProfile("test")); //будет затераться при рестарте
 
         GameService gameService = new GameServiceImpl();
         gameService.createCleanMap("FirstMap", 30, 15).fillRandomPlaces();

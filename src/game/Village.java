@@ -1,9 +1,15 @@
 package game;
 
 import com.google.gson.Gson;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import game.buildings.Build;
+import game.resources.Food;
+import game.resources.Resource;
+import game.resources.Wood;
 
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Created by nmikutskiy on 02.10.16.
@@ -16,8 +22,9 @@ public class Village {
     private String villageImageInTheMapUrl;
     private String villageImageInsideUrl;
     private int villageLevel = 0;
+    private Set<Resource> resources;
+    private Set<Army> units;
     private HashMap<Integer, Build> areaForBuildings = new HashMap<>(11);
-    private Object[] units;
 
     private Village(){
 //        throw new Exception();
@@ -30,6 +37,8 @@ public class Village {
         this.villageName = villageName;
         this.villageImageInTheMapUrl = "images/village.png";
         this.villageImageInsideUrl = "images/city.jpg";
+        this.resources.add(new Food(200));
+        this.resources.add(new Wood(100));
     }
 
     @Override
@@ -80,6 +89,14 @@ public class Village {
 
     public void setVillageLevel(int villageLevel) {
         this.villageLevel = villageLevel;
+    }
+
+    public Set<Resource> getResources() {
+        return resources;
+    }
+
+    public Set<Army> getUnits() {
+        return units;
     }
 
     /**

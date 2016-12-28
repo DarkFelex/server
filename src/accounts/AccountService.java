@@ -11,7 +11,7 @@ public class AccountService {
     private final Map<String, UserProfile> sessionIdToProfile;
 
     public AccountService() {
-        loginToProfile = new HashMap<>(); //временно вместо BD
+        loginToProfile = new HashMap<>(); //временно вместо BD TODO: переделать на DBService
         sessionIdToProfile = new HashMap<>();
     }
 

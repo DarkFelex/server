@@ -12,6 +12,7 @@ public class Barracks extends Build {
         setBuildLevel(0);
         setGoldToBuild(350);
         setHp(300);
+        setImgUrl("images/building/barracks.img");
     }
     @Override
     public boolean startBuild() {
