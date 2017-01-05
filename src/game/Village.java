@@ -20,7 +20,7 @@ public class Village {
     private String villageImageInTheMapUrl;
     private String villageImageInsideUrl;
     private int villageLevel = 0;
-    private HashMap<String, Resource> resources;
+    private HashMap<String, Resource> resources = new HashMap<>();
     private HashMap<String, Unit> units;
     private HashMap<Integer, Build> areaForBuildings = new HashMap<>(11);
 

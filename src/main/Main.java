@@ -26,6 +26,8 @@ import servlets.SignUpServlet;
 import servlets.TestChatAppServlet;
 import servlets.UsersServlet;
 import servlets.VillageServlet;
+import timeMachine.TimeMachine;
+import timeMachine.TimeMachineImpl;
 
 /**
  * Created by nmikutskiy on 18.09.16.
@@ -55,6 +57,9 @@ public class Main {
         GameService gameService = new GameServiceImpl();
         gameService.createCleanMap("FirstMap", 30, 15).fillRandomPlaces();
         gameService.getRegionOnTheMap(1,2).enableVillageBuildingOnPlace();
+
+        TimeMachine timeMachine = new TimeMachineImpl();//можно задать игровое время старта в секундах
+        timeMachine.startTime();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         /**

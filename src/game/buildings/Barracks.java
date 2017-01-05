@@ -33,8 +33,8 @@ public class Barracks extends Build {
         setGoldToBuild(getGoldToBuild() * getBuildLevel());
         return true;
     }
-
-    public unit createSpearman(){
-
-    }
+//
+//    public unit createSpearman(){
+//
+//    }
 }
