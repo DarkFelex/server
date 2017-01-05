@@ -1,11 +1,17 @@
 package game.buildings;
 
+import game.units.Unit;
+
+import java.util.HashMap;
+
 import static game.buildings.BuildType.MILITARY;
 
 /**
  * Created by nmikutskiy on 24.12.16.
  */
 public class Barracks extends Build {
+    private HashMap<String, Unit> unitsToCreate;
+
     public Barracks(){
         setBuildName("Barracks");
         setBuildType(MILITARY);
@@ -26,5 +32,9 @@ public class Barracks extends Build {
         setBuildLevel(getBuildLevel() + 1);
         setGoldToBuild(getGoldToBuild() * getBuildLevel());
         return true;
+    }
+
+    public unit createSpearman(){
+
     }
 }

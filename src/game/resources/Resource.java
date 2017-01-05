@@ -31,4 +31,12 @@ public abstract class Resource {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    public void add(int value){
+        this.value += value;
+    }
+
+    public void subtract(int value){
+        this.value -= value;
+    }
 }
