@@ -56,7 +56,12 @@ public class Main {
 
         GameService gameService = new GameServiceImpl();
         gameService.createCleanMap("FirstMap", 30, 15).fillRandomPlaces();
-        gameService.getRegionOnTheMap(1,2).enableVillageBuildingOnPlace();
+        for (int i = 1; i <= 30; i++){
+            for (int j = 1; j <= 15; j++){
+                gameService.getRegionOnTheMap(i, j).enableVillageBuildingOnPlace();
+                //gameService.getRegionOnTheMap(1,2).enableVillageBuildingOnPlace();
+            }
+        }
 
         TimeMachine timeMachine = new TimeMachineImpl();//можно задать игровое время старта в секундах
         timeMachine.startTime();

@@ -71,7 +71,7 @@ public class TimeMachineImpl implements TimeMachine {
         for (EachSecondTimeListener listener: listeners) {
             listener.newTick(currentGameTime);
         }
-        System.out.printf("Time: new tick = %d seconds\n", currentGameTime);
+//        System.out.printf("Time: new tick = %d seconds\n", currentGameTime);
     }
 
     /**
