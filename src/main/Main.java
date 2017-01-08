@@ -60,6 +60,7 @@ public class Main {
 
         TimeMachine timeMachine = new TimeMachineImpl();//можно задать игровое время старта в секундах
         timeMachine.startTime();
+        gameService.setTimeMachineInstandeLink(timeMachine);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         /**

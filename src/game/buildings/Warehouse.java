@@ -15,7 +15,7 @@ public class Warehouse extends Build {
         setImgUrl("images/building/warehouse.img");
     }
     @Override
-    public boolean startBuild() {
+    public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;
         setBuildLevel(1);
         return true;

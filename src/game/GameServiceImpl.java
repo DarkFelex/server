@@ -6,6 +6,9 @@ import game.buildings.Build;
 import game.buildings.Farm;
 import game.buildings.Palace;
 import game.buildings.Warehouse;
+import game.buildings.WoodFactory;
+import timeMachine.EachSecondTimeListener;
+import timeMachine.TimeMachine;
 
 import java.util.HashMap;
 
@@ -14,6 +17,11 @@ import java.util.HashMap;
  */
 public class GameServiceImpl implements GameService{
     Map map;
+    TimeMachine timeMachine;
+
+    public void setTimeMachineInstandeLink(TimeMachine tm){
+        timeMachine = tm;
+    }
 
     @Override
     public Map createCleanMap(String name, int sizeX, int sizeY) {
@@ -59,8 +67,27 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    public void buildWoodFactory(int x, int y, int areaNumber) {
+//        long timeToFinish = timeMachine.getCurrentGameTime() + 10;
+//        int id = timeMachine.addEachSecondListener(new EachSecondTimeListener() {
+//            @Override
+//            public void newTick(long currentGameTime) {
+//                if (timeMachine.getCurrentGameTime() ==  timeToFinish){
+                    map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory());
+                    System.out.println("Wood factory is built");
+//                } else System.out.println("Not yet");
+//            }
+//        });
+    }
+
+    @Override
     public void upgradeBuilding(int x, int y, int areaNumber) {
         map.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).upgradeBuilding();
+    }
+
+    @Override
+    public void delBuildOnAreaForBuildings(int x, int y, int areaNumber) {
+        map.getPlace(x, y).getVillage().getAreaForBuildings().remove(areaNumber);
     }
 
     @Override

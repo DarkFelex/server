@@ -15,7 +15,7 @@ public class WoodFactory extends Build {
         setImgUrl("images/building/woodfactory.img");
     }
     @Override
-    public boolean startBuild() {
+    public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;
         setBuildLevel(1);
         return true;

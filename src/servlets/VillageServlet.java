@@ -71,6 +71,12 @@ public class VillageServlet extends HttpServlet {
                 gameService.buildBarracks(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
+            case "/api/v1/village/build/woodfactory":
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "woodfactory"))
+                    return;
+                gameService.buildWoodFactory(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                break;
             case "/api/v1/village/build/upgrade":
                 if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, ""))
                     return;

@@ -21,7 +21,7 @@ public class Barracks extends Build {
         setImgUrl("images/building/barracks.img");
     }
     @Override
-    public boolean startBuild() {
+    public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;
         setBuildLevel(1);
         return true;

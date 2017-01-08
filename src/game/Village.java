@@ -109,4 +109,8 @@ public class Village {
         if (this.areaForBuildings.get(areaNumber) != null) return;
         getAreaForBuildings().put(areaNumber, build);
     }
+
+    public void delBuildOnAreaForBuildings(int areaNumber){
+        getAreaForBuildings().remove(areaNumber);
+    }
 }

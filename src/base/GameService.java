@@ -4,26 +4,43 @@ import game.Map;
 import game.Place;
 import game.Village;
 import game.buildings.Build;
+import timeMachine.TimeMachine;
 
 import java.util.HashMap;
 
 /**
  * Игровая механика и карта
- *
+ * <p>
  * Created by nmikutskiy on 18.10.16.
  */
 public interface GameService {
-    public Map createCleanMap(String name, int sizeX, int sizeY);
-    public Map getGameMap();
+    Map createCleanMap(String name, int sizeX, int sizeY);
 
-    public Place getRegionOnTheMap(int x, int y);
-    public Place setPlace(Place place);
-    public Village createVillage(int x, int y, String ownerUser, String villageName);
-    public HashMap<Integer, Build> getVillageBuildingsArea(int x, int y);
-    public void buildPalace(int x, int y, int areaNumber);
-    public void buildWarehouse(int x, int y, int areaNumber);
-    public void buildFarm(int x, int y, int areaNumber);
-    public void buildBarracks(int x, int y, int areaNumber);
-    public void upgradeBuilding(int x, int y, int areaNumber);
+    Map getGameMap();
+
+    void setTimeMachineInstandeLink(TimeMachine tm);
+
+    Place getRegionOnTheMap(int x, int y);
+
+    Place setPlace(Place place);
+
+    Village createVillage(int x, int y, String ownerUser, String villageName);
+
+    HashMap<Integer, Build> getVillageBuildingsArea(int x, int y);
+
+    void buildPalace(int x, int y, int areaNumber);
+
+    void buildWarehouse(int x, int y, int areaNumber);
+
+    void buildFarm(int x, int y, int areaNumber);
+
+    void buildBarracks(int x, int y, int areaNumber);
+
+    void buildWoodFactory(int x, int y, int areaNumber);
+
+    void upgradeBuilding(int x, int y, int areaNumber);
+
+    void delBuildOnAreaForBuildings(int x, int y, int areaNumber);
+
 
 }

@@ -59,7 +59,7 @@ public abstract class Build {
         this.imgUrl = imgUrl;
     }
 
-    public abstract boolean startBuild();
+    public abstract boolean finishBuild();
     public abstract boolean upgradeBuilding();
 
 }
