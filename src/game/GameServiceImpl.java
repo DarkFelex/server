@@ -68,6 +68,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public void buildWoodFactory(int x, int y, int areaNumber) {
+        //TODO: задержка на постройку: сначала построить здание 0-го уровня, потом поднять до 1
 //        long timeToFinish = timeMachine.getCurrentGameTime() + 10;
 //        int id = timeMachine.addEachSecondListener(new EachSecondTimeListener() {
 //            @Override
