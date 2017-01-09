@@ -92,6 +92,11 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    public long getCurrentServerTimeInSeconds() {
+        return timeMachine.getCurrentGameTime();
+    }
+
+    @Override
     public Place getRegionOnTheMap(int x, int y) {
         Place place = map.getPlace(x, y);
         System.out.println("Get place: " + x + "-" + y);

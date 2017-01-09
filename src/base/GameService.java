@@ -42,5 +42,7 @@ public interface GameService {
 
     void delBuildOnAreaForBuildings(int x, int y, int areaNumber);
 
+    long getCurrentServerTimeInSeconds();
+
 
 }

@@ -80,13 +80,14 @@ public class Main {
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new VillageServlet(accountService, gameService)), "/api/v1/village/*");
         context.addServlet(new ServletHolder(new MapServlet(accountService, gameService)), "/api/v1/get_region");
+        context.addServlet(new ServletHolder(new Frontend(accountService, gameService)), "/api/v1/game/current_time");
 
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
         context.addServlet(new ServletHolder(new SignOutServlet(accountService)), "/signout");
 
-        context.addServlet(new ServletHolder(new Frontend(accountService)), "/views/*");
-        context.addServlet(new ServletHolder(new Frontend(accountService)), "/images/map/region/*");
+        context.addServlet(new ServletHolder(new Frontend(accountService, gameService)), "/views/*");
+        context.addServlet(new ServletHolder(new Frontend(accountService, gameService)), "/images/map/region/*");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений

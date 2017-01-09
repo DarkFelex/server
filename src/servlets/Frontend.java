@@ -2,6 +2,7 @@ package servlets;
 
 import accounts.AccountService;
 import accounts.UserProfile;
+import base.GameService;
 import templater.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -21,8 +22,11 @@ import java.util.stream.Stream;
  */
 public class Frontend extends HttpServlet {
     private final AccountService accountService;
-    public Frontend(AccountService accountService){
+    private final GameService gameService;
+
+    public Frontend(AccountService accountService, GameService gameService){
         this.accountService = accountService;
+        this.gameService = gameService;
     }
 
     public void doGet(HttpServletRequest request,
@@ -48,6 +52,12 @@ public class Frontend extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
             response.getWriter().println(PageGenerator.instance().getPage("map_place_img.html", pageVariables));
             return;
+        }
+
+        if (path.contains("/api/v1/game/current_time")){
+            response.setContentType("text/html; charset=UTF-8");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().printf("{\"current game time\": \"%d\"}", gameService.getCurrentServerTimeInSeconds());
         }
 
         switch (path){
