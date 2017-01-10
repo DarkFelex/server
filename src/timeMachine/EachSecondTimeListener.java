@@ -5,4 +5,6 @@ package timeMachine;
  */
 public interface EachSecondTimeListener {
     void newTick(long currentGameTime);
+    void makeTaskFinished();
+    boolean isTaskFinished();
 }

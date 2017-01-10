@@ -7,7 +7,8 @@ import java.util.TimerTask;
  */
 public interface TimeMachine {
     int addEachSecondListener(EachSecondTimeListener toAdd);
-    void delFromEachSecondListener(int idToDel);
+    void delFromEachSecondListener(Object objToDel);
+    void cleanFinishedTasks();
 
     void startTime();
     void stopTime();

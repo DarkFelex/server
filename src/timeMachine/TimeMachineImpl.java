@@ -1,9 +1,12 @@
 package timeMachine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by nmikutskiy on 05.01.17.
@@ -26,7 +29,7 @@ public class TimeMachineImpl implements TimeMachine {
         currentGameTime = startWithTime;
     }
 
-    private List<EachSecondTimeListener> listeners = new ArrayList<EachSecondTimeListener>();
+    private List<EachSecondTimeListener> listeners = new CopyOnWriteArrayList<>();
 
     public int addEachSecondListener(EachSecondTimeListener toAdd){
         listeners.add(toAdd);
@@ -34,8 +37,18 @@ public class TimeMachineImpl implements TimeMachine {
     }
 
     @Override
-    public void delFromEachSecondListener(int idToDel) {
-        listeners.remove(idToDel);
+    public void delFromEachSecondListener(Object objToDel) {
+        listeners.remove(objToDel);
+    }
+
+    /**
+     * Ищем все лисенеры, у который статус finished и удаляем их
+     */
+    @Override
+    public void cleanFinishedTasks() {
+        //TODO: Удалять из подписок выполненные таски
+        listeners.stream().filter(t -> t.isTaskFinished() == true).forEach(t -> delFromEachSecondListener(t));
+        //Этот падает с Exception in thread "Timer-0" java.util.ConcurrentModificationException
     }
 
 

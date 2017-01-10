@@ -64,21 +64,70 @@ public class GameServiceImpl implements GameService{
     @Override
     public void buildBarracks(int x, int y, int areaNumber) {
         map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Barracks());
+        System.out.println("Barrack 0 level is built");
+
+        long timeToFinish = timeMachine.getCurrentGameTime() + 100; //Barrack строится 100 секунд
+        timeMachine.addEachSecondListener(new EachSecondTimeListener() {
+            boolean isFinishedTask = false;
+            @Override
+            public void newTick(long currentGameTime) {
+                if (currentGameTime == timeToFinish && !isFinishedTask){
+                    upgradeBuilding(x, y, areaNumber);
+                    System.out.println("Barrack building is finished! Lv = 1");
+                } else {
+                    if (currentGameTime > timeToFinish && !isFinishedTask) {
+                        System.out.println("Listener is need to be deleted");
+                        makeTaskFinished();
+                        timeMachine.cleanFinishedTasks();
+                    } else System.out.println("Not yet");
+                }
+            }
+
+            @Override
+            public void makeTaskFinished() {
+                isFinishedTask = true;
+            }
+
+            @Override
+            public boolean isTaskFinished() {
+                return isFinishedTask;
+            }
+        });
     }
 
     @Override
     public void buildWoodFactory(int x, int y, int areaNumber) {
-        //TODO: задержка на постройку: сначала построить здание 0-го уровня, потом поднять до 1
-//        long timeToFinish = timeMachine.getCurrentGameTime() + 10;
-//        int id = timeMachine.addEachSecondListener(new EachSecondTimeListener() {
-//            @Override
-//            public void newTick(long currentGameTime) {
-//                if (timeMachine.getCurrentGameTime() ==  timeToFinish){
-                    map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory());
-                    System.out.println("Wood factory is built");
-//                } else System.out.println("Not yet");
-//            }
-//        });
+        //задержка на постройку не нужна: сначала построить здание 0-го уровня, потом поднять до 1
+        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory());
+        System.out.println("Wood factory 0 level is built");
+
+        long timeToFinish = timeMachine.getCurrentGameTime() + 10; //WoodFactory строится 10 секунд
+        timeMachine.addEachSecondListener(new EachSecondTimeListener() {
+            boolean isFinishedTask = false;
+            @Override
+            public void newTick(long currentGameTime) {
+                if (currentGameTime == timeToFinish && !isFinishedTask){
+                    upgradeBuilding(x, y, areaNumber);
+                    System.out.println("Wood factory building is finished! Lv = 1");
+                } else {
+                    if (currentGameTime > timeToFinish && !isFinishedTask) {
+                        System.out.println("Listener is need to be deleted");
+                        makeTaskFinished();
+                        timeMachine.cleanFinishedTasks();
+                    } else System.out.println("Not yet");
+                }
+            }
+
+            @Override
+            public void makeTaskFinished() {
+                isFinishedTask = true;
+            }
+
+            @Override
+            public boolean isTaskFinished() {
+                return isFinishedTask;
+            }
+        });
     }
 
     @Override

@@ -48,37 +48,37 @@ public class VillageServlet extends HttpServlet {
                 // TODO: get village by user name
                 break;
             case "/api/v1/village/build/palace":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "palace"))
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
                     return;
                 gameService.buildPalace(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/warehouse":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "warehouse"))
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
                     return;
                 gameService.buildWarehouse(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/farm":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "farm"))
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
                     return;
                 gameService.buildFarm(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/barracks":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "barracks"))
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
                     return;
                 gameService.buildBarracks(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/woodfactory":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "woodfactory"))
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
                     return;
                 gameService.buildWoodFactory(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/upgrade":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, ""))
+                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
                     return;
                 gameService.upgradeBuilding(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -148,9 +148,18 @@ public class VillageServlet extends HttpServlet {
         TODO: 3. проверка, что достаточно ресурсов
         * */
         Village village = gameService.getRegionOnTheMap(x, y).getVillage();
-        if (village == null) return false;
-        if (village.getOwnerUser() != userProfile.getLogin()) return false;
-        if (village.getAreaForBuildings().get(areaNumber) != null) return false;
+        if (village == null) {
+            System.out.println("Ошибка при попытке построит здание: на указанной клетке нет деревни");
+            return false;
+        }
+        if (village.getOwnerUser() != userProfile.getLogin()) {
+            System.out.println("Ошибка при попытке построит здание: попытка построить здание в чужой деревне");
+            return false;
+        }
+        if (village.getAreaForBuildings().get(areaNumber) != null) {
+            System.out.println("Ошибка при попытке построит здание: попытка постотить здание на занятой клетке");
+            return false;
+        }
 
         return true;
     }
