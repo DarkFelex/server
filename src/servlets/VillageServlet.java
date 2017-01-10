@@ -140,13 +140,17 @@ public class VillageServlet extends HttpServlet {
         }
     }
 
-    private boolean checkAvailableToBuild(int x, int y, UserProfile userProfile, String buildName){
+    private boolean checkAvailableToBuild(int x, int y, UserProfile userProfile, int areaNumber){
         /*
         1. проверка что на этой клетке есть деревня вообще
         2. проверка что юзер строит в своей деревне
+        3. проверка что клетка для строительства не занята другим зданием
         TODO: 3. проверка, что достаточно ресурсов
         * */
-        if (gameService.getGameMap().getPlace(x, y).getVillage().getOwnerUser() != userProfile.getLogin()) return false;
+        Village village = gameService.getRegionOnTheMap(x, y).getVillage();
+        if (village == null) return false;
+        if (village.getOwnerUser() != userProfile.getLogin()) return false;
+        if (village.getAreaForBuildings().get(areaNumber) != null) return false;
 
         return true;
     }
