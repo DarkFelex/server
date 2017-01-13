@@ -1,11 +1,14 @@
 package game.buildings;
 
+import game.Village;
+
 /**
  * Created by nmikutskiy on 02.10.16.
  */
 public abstract class Build {
     private String buildName;
     private BuildType buildType;
+    private Village village;
     private String imgUrl;
     private int hp;
     private int buildLevel;
@@ -59,6 +62,16 @@ public abstract class Build {
         this.imgUrl = imgUrl;
     }
 
+    public Village getVillage() {
+        return village;
+    }
+
+    public void setVillage(Village village) {
+        this.village = village;
+    }
+
+
+    public abstract void makeResources(long currentTime);
     public abstract boolean finishBuild();
     public abstract boolean upgradeBuilding();
 

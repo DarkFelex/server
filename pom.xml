@@ -6,6 +6,7 @@
 
     <groupId>game</groupId>
     <artifactId>game_server</artifactId>
+    <packaging>pom</packaging>
     <version>1.0</version>
 
     <build>
@@ -38,6 +39,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>test</module>
+    </modules>
 
     <properties>
         <org.eclipse.jetty.version>9.3.0.M0</org.eclipse.jetty.version>

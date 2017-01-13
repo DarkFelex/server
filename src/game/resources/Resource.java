@@ -4,15 +4,15 @@ package game.resources;
  * Created by nmikutskiy on 27.12.16.
  */
 public abstract class Resource {
-    private String name;
+    private Resources name;
     private int value = 0;
     private String imgUrl;
 
-    public String getName() {
+    public Resources getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Resources name) {
         this.name = name;
     }
 

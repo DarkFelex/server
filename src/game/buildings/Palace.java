@@ -14,6 +14,12 @@ public class Palace extends Build {
         setHp(12000);
         setImgUrl("images/building/palace.img");
     }
+
+    @Override
+    public void makeResources(long currentTime) {
+
+    }
+
     @Override
     public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;

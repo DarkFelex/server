@@ -20,6 +20,12 @@ public class Barracks extends Build {
         setHp(300);
         setImgUrl("images/building/barracks.img");
     }
+
+    @Override
+    public void makeResources(long currentTime) {
+
+    }
+
     @Override
     public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;

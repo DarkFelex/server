@@ -14,6 +14,12 @@ public class Farm extends Build {
         setHp(150);
         setImgUrl("images/building/farm.img");
     }
+
+    @Override
+    public void makeResources(long currentTime) {
+
+    }
+
     @Override
     public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;

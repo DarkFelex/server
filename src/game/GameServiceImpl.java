@@ -7,6 +7,7 @@ import game.buildings.Farm;
 import game.buildings.Palace;
 import game.buildings.Warehouse;
 import game.buildings.WoodFactory;
+import game.resources.Wood;
 import timeMachine.EachSecondTimeListener;
 import timeMachine.TimeMachine;
 
@@ -98,7 +99,7 @@ public class GameServiceImpl implements GameService{
     @Override
     public void buildWoodFactory(int x, int y, int areaNumber) {
         //задержка на постройку не нужна: сначала построить здание 0-го уровня, потом поднять до 1
-        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory());
+        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory(map.getPlace(x, y).getVillage()));
         System.out.println("Wood factory 0 level is built");
 
         long timeToFinish = timeMachine.getCurrentGameTime() + 10; //WoodFactory строится 10 секунд
@@ -109,6 +110,22 @@ public class GameServiceImpl implements GameService{
                 if (currentGameTime == timeToFinish && !isFinishedTask){
                     upgradeBuilding(x, y, areaNumber);
                     System.out.println("Wood factory building is finished! Lv = 1");
+                    timeMachine.addEachSecondListener(new EachSecondTimeListener() {
+                        @Override
+                        public void newTick(long currentGameTime) {
+                            map.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).makeResources(currentGameTime);
+                        }
+
+                        @Override
+                        public void makeTaskFinished() {
+
+                        }
+
+                        @Override
+                        public boolean isTaskFinished() {
+                            return false;
+                        }
+                    });
                 } else {
                     if (currentGameTime > timeToFinish && !isFinishedTask) {
                         System.out.println("Listener is need to be deleted");

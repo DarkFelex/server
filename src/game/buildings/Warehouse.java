@@ -14,6 +14,12 @@ public class Warehouse extends Build {
         setHp(50);
         setImgUrl("images/building/warehouse.img");
     }
+
+    @Override
+    public void makeResources(long currentTime) {
+
+    }
+
     @Override
     public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;
