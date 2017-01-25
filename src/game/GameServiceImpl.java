@@ -7,17 +7,16 @@ import game.buildings.Farm;
 import game.buildings.Palace;
 import game.buildings.Warehouse;
 import game.buildings.WoodFactory;
-import game.resources.Wood;
 import timeMachine.EachSecondTimeListener;
 import timeMachine.TimeMachine;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by nmikutskiy on 18.10.16.
  */
 public class GameServiceImpl implements GameService{
-    Map map;
+    GameMap gameMap;
     TimeMachine timeMachine;
 
     public void setTimeMachineInstandeLink(TimeMachine tm){
@@ -25,46 +24,46 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
-    public Map createCleanMap(String name, int sizeX, int sizeY) {
-        map = new Map(name, sizeX,sizeY);
-        return map;
+    public GameMap createCleanMap(String name, int sizeX, int sizeY) {
+        gameMap = new GameMap(name, sizeX,sizeY);
+        return gameMap;
     }
 
     @Override
-    public Map getGameMap() {
-        return map;
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
     @Override
     public Village createVillage(int x, int y, String ownerUser, String villageName) {
-        return map.getPlace(x, y)
+        return gameMap.getPlace(x, y)
                 .addVillageOnPlace(villageName, ownerUser)
                 .getVillage();
     }
 
     @Override
-    public HashMap<Integer, Build> getVillageBuildingsArea(int x, int y) {
-        return map.getPlace(x, y).getVillage().getAreaForBuildings();
+    public Map<Integer, Build> getVillageBuildingsArea(int x, int y) {
+        return gameMap.getPlace(x, y).getVillage().getAreaForBuildings();
     }
 
     @Override
     public void buildPalace(int x, int y, int areaNumber) {
-        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Palace());
+        gameMap.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Palace());
     }
 
     @Override
     public void buildWarehouse(int x, int y, int areaNumber) {
-        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Warehouse());
+        gameMap.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Warehouse());
     }
 
     @Override
     public void buildFarm(int x, int y, int areaNumber) {
-        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Farm());
+        gameMap.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Farm());
     }
 
     @Override
     public void buildBarracks(int x, int y, int areaNumber) {
-        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Barracks());
+        gameMap.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new Barracks());
         System.out.println("Barrack 0 level is built");
 
         long timeToFinish = timeMachine.getCurrentGameTime() + 100; //Barrack строится 100 секунд
@@ -99,7 +98,7 @@ public class GameServiceImpl implements GameService{
     @Override
     public void buildWoodFactory(int x, int y, int areaNumber) {
         //задержка на постройку не нужна: сначала построить здание 0-го уровня, потом поднять до 1
-        map.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory(map.getPlace(x, y).getVillage()));
+        gameMap.getPlace(x, y).getVillage().setBuildOnAreaForBuildings(areaNumber, new WoodFactory(gameMap.getPlace(x, y).getVillage()));
         System.out.println("Wood factory 0 level is built");
 
         long timeToFinish = timeMachine.getCurrentGameTime() + 10; //WoodFactory строится 10 секунд
@@ -113,7 +112,7 @@ public class GameServiceImpl implements GameService{
                     timeMachine.addEachSecondListener(new EachSecondTimeListener() {
                         @Override
                         public void newTick(long currentGameTime) {
-                            map.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).makeResources(currentGameTime);
+                            gameMap.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).makeResources(currentGameTime);
                         }
 
                         @Override
@@ -149,12 +148,12 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public void upgradeBuilding(int x, int y, int areaNumber) {
-        map.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).upgradeBuilding();
+        gameMap.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).upgradeBuilding();
     }
 
     @Override
     public void delBuildOnAreaForBuildings(int x, int y, int areaNumber) {
-        map.getPlace(x, y).getVillage().getAreaForBuildings().remove(areaNumber);
+        gameMap.getPlace(x, y).getVillage().getAreaForBuildings().remove(areaNumber);
     }
 
     @Override
@@ -164,7 +163,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public Place getRegionOnTheMap(int x, int y) {
-        Place place = map.getPlace(x, y);
+        Place place = gameMap.getPlace(x, y);
         System.out.println("Get place: " + x + "-" + y);
         if (place == null) return null;
         return place;
@@ -172,7 +171,7 @@ public class GameServiceImpl implements GameService{
 
     @Override
     public Place setPlace(Place place) {
-        if (map.setPlace(place)) return place;
+        if (gameMap.setPlace(place)) return place;
         return null;
     }
 

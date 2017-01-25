@@ -9,6 +9,8 @@ import game.resources.Wood;
 import game.units.Unit;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static game.resources.Resources.FOOD;
 import static game.resources.Resources.WOOD;
@@ -24,9 +26,9 @@ public class Village {
     private String villageImageInTheMapUrl;
     private String villageImageInsideUrl;
     private int villageLevel = 0;
-    private HashMap<Resources, Resource> resources = new HashMap<>();
-    private HashMap<String, Unit> units;
-    private HashMap<Integer, Build> areaForBuildings = new HashMap<>(11);
+    private Map<Resources, Resource> resources = new ConcurrentHashMap<>();
+    private Map<String, Unit> units;
+    private Map<Integer, Build> areaForBuildings = new ConcurrentHashMap<>(11);
 
     private Village(){
 //        throw new Exception();
@@ -93,11 +95,11 @@ public class Village {
         this.villageLevel = villageLevel;
     }
 
-    public HashMap<Resources, Resource> getResources() {
+    public Map<Resources, Resource> getResources() {
         return resources;
     }
 
-    public HashMap<String, Unit> getUnits() {
+    public Map<String, Unit> getUnits() {
         return units;
     }
 
@@ -105,7 +107,7 @@ public class Village {
      * Чтобы получить все клетки со зданиями или без
      * @return
      */
-    public HashMap<Integer, Build> getAreaForBuildings() {
+    public Map<Integer, Build> getAreaForBuildings() {
         return areaForBuildings;
     }
 

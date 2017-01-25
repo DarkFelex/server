@@ -29,7 +29,7 @@ public class Place {
         this.x = x;
         this.y = y;
         this.regionId = regionId;
-        this.setPlaceImageUrl(String.format("images/map/region/%d/%d-%d.img", 1, x, y));
+        this.setPlaceImageUrl(String.format("images/gameMap/region/%d/%d-%d.img", 1, x, y));
     }
 
     public int getX() {

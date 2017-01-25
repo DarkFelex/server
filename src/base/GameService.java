@@ -1,12 +1,12 @@
 package base;
 
-import game.Map;
+import game.GameMap;
 import game.Place;
 import game.Village;
 import game.buildings.Build;
 import timeMachine.TimeMachine;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Игровая механика и карта
@@ -14,9 +14,9 @@ import java.util.HashMap;
  * Created by nmikutskiy on 18.10.16.
  */
 public interface GameService {
-    Map createCleanMap(String name, int sizeX, int sizeY);
+    GameMap createCleanMap(String name, int sizeX, int sizeY);
 
-    Map getGameMap();
+    GameMap getGameMap();
 
     void setTimeMachineInstandeLink(TimeMachine tm);
 
@@ -26,7 +26,7 @@ public interface GameService {
 
     Village createVillage(int x, int y, String ownerUser, String villageName);
 
-    HashMap<Integer, Build> getVillageBuildingsArea(int x, int y);
+    Map<Integer, Build> getVillageBuildingsArea(int x, int y);
 
     void buildPalace(int x, int y, int areaNumber);
 

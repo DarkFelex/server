@@ -9,7 +9,6 @@ import base.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 import game.GameServiceImpl;
-import game.Map;
 import game.MapServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -17,13 +16,11 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.ChatServlet;
 import servlets.Frontend;
 import servlets.SessionsServlet;
 import servlets.SignInServlet;
 import servlets.SignOutServlet;
 import servlets.SignUpServlet;
-import servlets.TestChatAppServlet;
 import servlets.UsersServlet;
 import servlets.VillageServlet;
 import timeMachine.TimeMachine;
@@ -77,6 +74,7 @@ public class Main {
          *
          */
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
+        //todo: добавить get и set userGroup (ADMIN,USER,TESTER...) для профайлов пользователей
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new VillageServlet(accountService, gameService)), "/api/v1/village/*");
         context.addServlet(new ServletHolder(new MapServlet(accountService, gameService)), "/api/v1/get_region");

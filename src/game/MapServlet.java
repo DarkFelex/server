@@ -35,7 +35,7 @@ public class MapServlet extends HttpServlet {
         String path = request.getRequestURI().toString();
         switch (path) {
             case "/api/v1/get_region":
-                //get single square from map
+                //get single square from gameMap
                 String x = request.getParameter("x");
                 String y = request.getParameter("y");
                 if (x == null || x.isEmpty() ||
