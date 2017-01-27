@@ -1,5 +1,6 @@
 package game.buildings;
 
+import game.Village;
 import game.units.Unit;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Barracks extends Build {
     }
 
     @Override
-    public void makeResources(long currentTime) {
+    public void makeResources(long currentTime, Village village) {
 
     }
 

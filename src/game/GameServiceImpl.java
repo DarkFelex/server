@@ -112,7 +112,8 @@ public class GameServiceImpl implements GameService{
                     timeMachine.addEachSecondListener(new EachSecondTimeListener() {
                         @Override
                         public void newTick(long currentGameTime) {
-                            gameMap.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).makeResources(currentGameTime);
+                            gameMap.getPlace(x, y).getVillage().getAreaForBuildings().get(areaNumber).
+                                    makeResources(currentGameTime, gameMap.getPlace(x, y).getVillage());
                         }
 
                         @Override

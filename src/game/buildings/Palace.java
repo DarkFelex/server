@@ -1,5 +1,7 @@
 package game.buildings;
 
+import game.Village;
+
 import static game.buildings.BuildType.INFRASTRUCTURE;
 
 /**
@@ -16,7 +18,7 @@ public class Palace extends Build {
     }
 
     @Override
-    public void makeResources(long currentTime) {
+    public void makeResources(long currentTime, Village village) {
 
     }
 

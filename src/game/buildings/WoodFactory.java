@@ -19,7 +19,6 @@ public class WoodFactory extends Build {
         setGoldToBuild(30);
         setHp(70);
         setImgUrl("images/building/woodfactory.img");
-        setVillage(village);
     }
     @Override
     public boolean finishBuild() {
@@ -35,11 +34,11 @@ public class WoodFactory extends Build {
         return true;
     }
     @Override
-    public void makeResources(long currentTime){
+    public void makeResources(long currentTime, Village village){
         if (currentTime % 5 == 0){//Раз в 5 секунд
-            int value = getVillage().getResources().get(WOOD).getValue();
-            getVillage().getResources().get(WOOD).setValue(++value);
-            System.out.println(getVillage().getResources().get(WOOD).getName() + " = " + getVillage().getResources().get(WOOD).getValue());
+            int value = village.getResources().get(WOOD).getValue();
+            village.getResources().get(WOOD).setValue(++value);
+            System.out.println(village.getResources().get(WOOD).getName() + " = " + village.getResources().get(WOOD).getValue());
         }
     }
 }
