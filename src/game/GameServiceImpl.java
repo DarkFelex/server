@@ -7,10 +7,15 @@ import game.buildings.Farm;
 import game.buildings.Palace;
 import game.buildings.Warehouse;
 import game.buildings.WoodFactory;
+import game.units.Spearman;
+import game.units.UnitType;
 import timeMachine.EachSecondTimeListener;
 import timeMachine.TimeMachine;
 
 import java.util.Map;
+
+import static game.units.UnitType.SPEARMAN;
+import static java.lang.String.format;
 
 /**
  * Created by nmikutskiy on 18.10.16.
@@ -160,6 +165,11 @@ public class GameServiceImpl implements GameService{
     @Override
     public long getCurrentServerTimeInSeconds() {
         return timeMachine.getCurrentGameTime();
+    }
+
+    @Override
+    public void createSpearman(int x, int y, int count, String userOwner) {
+        gameMap.getPlace(x, y).getVillage().getUnits().put(SPEARMAN, new Spearman(userOwner, format("%d-%d",x,y)));
     }
 
     @Override

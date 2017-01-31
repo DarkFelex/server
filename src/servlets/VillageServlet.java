@@ -4,6 +4,7 @@ import accounts.AccountService;
 import accounts.UserProfile;
 import base.GameService;
 import game.Village;
+import game.units.Units;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,7 @@ public class VillageServlet extends HttpServlet {
         String path = request.getRequestURI().toString();
         String x = request.getParameter("x");
         String y = request.getParameter("y");
+        String count = request.getParameter("count");
         String areaNumber = request.getParameter("area_number");
 
         if (x == null || x.isEmpty() ||
@@ -83,6 +85,11 @@ public class VillageServlet extends HttpServlet {
                 gameService.upgradeBuilding(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_OK);
                 break;
+            case "/api/v1/village/army/create/spearman":
+                if (!checkAvailableToCreateUnits(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(count), profile))
+                    return;
+                createUnit(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(count));
+                response.setStatus(HttpServletResponse.SC_OK);
             default:
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().println("Something go wrong");
@@ -140,6 +147,10 @@ public class VillageServlet extends HttpServlet {
         }
     }
 
+    private void createUnit(int x, int y, UserProfile ownerUser, int count){
+        gameService.createSpearman(x, y, count, ownerUser.getLogin());
+    }
+
     private boolean checkAvailableToBuild(int x, int y, UserProfile userProfile, int areaNumber){
         /*
         1. проверка что на этой клетке есть деревня вообще
@@ -161,6 +172,22 @@ public class VillageServlet extends HttpServlet {
             return false;
         }
 
+        return true;
+    }
+
+    private boolean checkAvailableToCreateUnits(int x, int y, int count, UserProfile userProfile){
+        Village village = gameService.getRegionOnTheMap(x, y).getVillage();
+        if (village == null) {
+            System.out.println("Ошибка при попытке построит здание: на указанной клетке нет деревни");
+            return false;
+        }
+        if (village.getOwnerUser() != userProfile.getLogin()) {
+            System.out.println("Ошибка при попытке построит здание: попытка построить здание в чужой деревне");
+            return false;
+        }
+        if (count < 0) {
+            return false;
+        }
         return true;
     }
 }

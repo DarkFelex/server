@@ -6,9 +6,9 @@ import game.resources.Food;
 import game.resources.Resource;
 import game.resources.Resources;
 import game.resources.Wood;
-import game.units.Unit;
+import game.units.UnitType;
+import game.units.Units;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,7 +27,7 @@ public class Village {
     private String villageImageInsideUrl;
     private int villageLevel = 0;
     private Map<Resources, Resource> resources = new ConcurrentHashMap<>();
-    private Map<String, Unit> units;
+    private Map<UnitType, Units> units = new ConcurrentHashMap<>();
     private Map<Integer, Build> areaForBuildings = new ConcurrentHashMap<>(11);
 
     private Village(){
@@ -99,7 +99,7 @@ public class Village {
         return resources;
     }
 
-    public Map<String, Unit> getUnits() {
+    public Map<UnitType, Units> getUnits() {
         return units;
     }
 

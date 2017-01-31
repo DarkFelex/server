@@ -3,7 +3,7 @@ package game.units;
 /**
  * Created by nmikutskiy on 02.10.16.
  */
-public abstract class Unit {
+public abstract class Units {
     String name;
     int amount;
     String imgUrl;
@@ -76,6 +76,14 @@ public abstract class Unit {
 
     public void setCordCurrentLocation(String cordCurrentLocation) {
         this.cordCurrentLocation = cordCurrentLocation;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public abstract void attack(Object target);

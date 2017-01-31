@@ -3,7 +3,7 @@ package game.units;
 /**
  * Created by nmikutskiy on 30.12.16.
  */
-public class Spearman extends Unit {
+public class Spearman extends Units {
     public Spearman(){
         setName("Spearman");
 

@@ -44,5 +44,7 @@ public interface GameService {
 
     long getCurrentServerTimeInSeconds();
 
+    void createSpearman(int x, int y, int count, String userOwner);
+
 
 }
