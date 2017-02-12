@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by nmikutskiy on 04.10.16.
  */
@@ -38,6 +40,7 @@ public class VillageServlet extends HttpServlet {
         String y = request.getParameter("y");
         String count = request.getParameter("count");
         String areaNumber = request.getParameter("area_number");
+        String barraksLocation = request.getParameter("barraks_location");
 
         if (x == null || x.isEmpty() ||
                 y == null || y.isEmpty() ||
@@ -50,45 +53,45 @@ public class VillageServlet extends HttpServlet {
                 // TODO: get village by user name
                 break;
             case "/api/v1/village/build/palace":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildPalace(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildPalace(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/warehouse":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildWarehouse(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildWarehouse(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/farm":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildFarm(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildFarm(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/barracks":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildBarracks(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildBarracks(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/woodfactory":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildWoodFactory(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildWoodFactory(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/upgrade":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(areaNumber)))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.upgradeBuilding(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.upgradeBuilding(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_OK);
                 break;
             case "/api/v1/village/army/create/spearman":
-                if (!checkAvailableToCreateUnits(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(count), profile))
+                if (!checkAvailableToCreateUnits(parseInt(x), parseInt(y), parseInt(count), profile))
                     return;
-                createUnit(Integer.parseInt(x), Integer.parseInt(y), profile, Integer.parseInt(count));
+                createUnit(parseInt(x), parseInt(y), profile, parseInt(count), parseInt(barraksLocation));
                 response.setStatus(HttpServletResponse.SC_OK);
             default:
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -119,7 +122,7 @@ public class VillageServlet extends HttpServlet {
                         y == null || y.isEmpty() ||
                         villageName == null || villageName.isEmpty()) break;
 
-                Village village = createVillage(Integer.parseInt(x), Integer.parseInt(y), profile, villageName);
+                Village village = createVillage(parseInt(x), parseInt(y), profile, villageName);
                 if (village == null) break;
 
                 response.setContentType("text/html;charset=utf-8");
@@ -147,8 +150,8 @@ public class VillageServlet extends HttpServlet {
         }
     }
 
-    private void createUnit(int x, int y, UserProfile ownerUser, int count){
-        gameService.createSpearman(x, y, count, ownerUser.getLogin());
+    private void createUnit(int x, int y, UserProfile ownerUser, int count, int barraksLocation){
+        gameService.createSpearman(x, y, count, barraksLocation, ownerUser.getLogin());
     }
 
     private boolean checkAvailableToBuild(int x, int y, UserProfile userProfile, int areaNumber){

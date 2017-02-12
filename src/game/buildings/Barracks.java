@@ -3,11 +3,13 @@ package game.buildings;
 import accounts.UserProfile;
 import game.Village;
 import game.units.Spearman;
+import game.units.UnitType;
 import game.units.Units;
 
 import java.util.HashMap;
 
 import static game.buildings.BuildType.MILITARY;
+import static game.units.UnitType.SPEARMAN;
 
 /**
  * Created by nmikutskiy on 24.12.16.
@@ -44,13 +46,13 @@ public class Barracks extends Build {
     }
 
     public Units createSpearman(Village village, int amount){
-        if (village.getUnits().get("Spearman") == null){
-            village.getUnits().put("Spearman", new Spearman());
+        if (village.getUnits().get(SPEARMAN) == null){
+            village.getUnits().put(SPEARMAN, new Spearman());
         }
 
-        int currentSpearmanAmount = village.getUnits().get("Spearman").getAmount();
-        village.getUnits().get("Spearman").setAmount(currentSpearmanAmount += amount);
+        int currentSpearmanAmount = village.getUnits().get(SPEARMAN).getAmount();
+        village.getUnits().get(SPEARMAN).setAmount(currentSpearmanAmount += amount);
 
-        return village.getUnits().get("Spearman");
+        return village.getUnits().get(SPEARMAN);
     }
 }

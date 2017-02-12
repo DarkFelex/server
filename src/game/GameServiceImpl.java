@@ -9,6 +9,7 @@ import game.buildings.Warehouse;
 import game.buildings.WoodFactory;
 import game.units.Spearman;
 import game.units.UnitType;
+import game.units.Units;
 import timeMachine.EachSecondTimeListener;
 import timeMachine.TimeMachine;
 
@@ -168,7 +169,57 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
-    public void createSpearman(int x, int y, int count, String userOwner) {
+    public void createSpearman(int x, int y, int amount, int barracsCordsArea, String userOwner) {
+        System.out.println("Create spearmans...");
+
+        long timeToFinish = timeMachine.getCurrentGameTime() + 30; //1 spearman строится 30 секунд
+        //todo: сделать очередь в которую помещать таски на создание юнитов
+        timeMachine.addEachSecondListener(new EachSecondTimeListener() {
+            boolean isFinishedTask = false;
+            @Override
+            public void newTick(long currentGameTime) {
+                if (currentGameTime == timeToFinish && !isFinishedTask){
+                    System.out.println(userOwner + "Start to create slpearman " + amount);
+                    timeMachine.addEachSecondListener(new EachSecondTimeListener() {
+                        @Override
+                        public void newTick(long currentGameTime) {
+                            String buildName = gameMap.getPlace(x, y).getVillage().getAreaForBuildings().get(barracsCordsArea).getBuildName();
+                            if (buildName == "Barracks"){//todo: имя здания вынести в список
+                                Barracks barraks = (Barracks) gameMap.getPlace(x, y).getVillage().getAreaForBuildings().get(barracsCordsArea);
+                                barraks.createSpearman(gameMap.getPlace(x, y).getVillage(), amount);
+                            } else System.out.println("Попытка создать spearman не здании barraks");
+                        }
+
+                        @Override
+                        public void makeTaskFinished() {
+
+                        }
+
+                        @Override
+                        public boolean isTaskFinished() {
+                            return false;
+                        }
+                    });
+                } else {
+                    if (currentGameTime > timeToFinish && !isFinishedTask) {
+                        System.out.println("Listener is need to be deleted");
+                        makeTaskFinished();
+                        timeMachine.cleanFinishedTasks();
+                    } else System.out.println("Not yet");
+                }
+            }
+
+            @Override
+            public void makeTaskFinished() {
+                isFinishedTask = true;
+            }
+
+            @Override
+            public boolean isTaskFinished() {
+                return isFinishedTask;
+            }
+        });
+
         gameMap.getPlace(x, y).getVillage().getUnits().put(SPEARMAN, new Spearman(userOwner, format("%d-%d",x,y)));
     }
 
