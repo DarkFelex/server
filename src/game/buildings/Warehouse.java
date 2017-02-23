@@ -1,5 +1,7 @@
 package game.buildings;
 
+import game.Village;
+
 import static game.buildings.BuildType.INDUSTRY;
 
 /**
@@ -12,9 +14,16 @@ public class Warehouse extends Build {
         setBuildLevel(0);
         setGoldToBuild(20);
         setHp(50);
+        setImgUrl("images/building/warehouse.img");
     }
+
     @Override
-    public boolean startBuild() {
+    public void makeResources(long currentTime, Village village) {
+
+    }
+
+    @Override
+    public boolean finishBuild() {
         if (getBuildLevel() != 0) return false;
         setBuildLevel(1);
         return true;

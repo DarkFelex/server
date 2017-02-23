@@ -2,8 +2,18 @@ package game;
 
 import com.google.gson.Gson;
 import game.buildings.Build;
+import game.resources.Food;
+import game.resources.Resource;
+import game.resources.Resources;
+import game.resources.Wood;
+import game.units.UnitType;
+import game.units.Units;
 
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static game.resources.Resources.FOOD;
+import static game.resources.Resources.WOOD;
 
 /**
  * Created by nmikutskiy on 02.10.16.
@@ -16,8 +26,9 @@ public class Village {
     private String villageImageInTheMapUrl;
     private String villageImageInsideUrl;
     private int villageLevel = 0;
-    private HashMap<Integer, Build> areaForBuildings = new HashMap<>(11);
-    private Object[] units;
+    private Map<Resources, Resource> resources = new ConcurrentHashMap<>();
+    private Map<UnitType, Units> units = new ConcurrentHashMap<>();
+    private Map<Integer, Build> areaForBuildings = new ConcurrentHashMap<>(11);
 
     private Village(){
 //        throw new Exception();
@@ -30,6 +41,8 @@ public class Village {
         this.villageName = villageName;
         this.villageImageInTheMapUrl = "images/village.png";
         this.villageImageInsideUrl = "images/city.jpg";
+        this.resources.put(FOOD, new Food());
+        this.resources.put(WOOD, new Wood());
     }
 
     @Override
@@ -82,16 +95,28 @@ public class Village {
         this.villageLevel = villageLevel;
     }
 
+    public Map<Resources, Resource> getResources() {
+        return resources;
+    }
+
+    public Map<UnitType, Units> getUnits() {
+        return units;
+    }
+
     /**
      * Чтобы получить все клетки со зданиями или без
      * @return
      */
-    public HashMap<Integer, Build> getAreaForBuildings() {
+    public Map<Integer, Build> getAreaForBuildings() {
         return areaForBuildings;
     }
 
     public void setBuildOnAreaForBuildings(Integer areaNumber, Build build) {
         if (this.areaForBuildings.get(areaNumber) != null) return;
         getAreaForBuildings().put(areaNumber, build);
+    }
+
+    public void delBuildOnAreaForBuildings(int areaNumber){
+        getAreaForBuildings().remove(areaNumber);
     }
 }

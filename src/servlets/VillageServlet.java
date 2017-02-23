@@ -4,12 +4,15 @@ import accounts.AccountService;
 import accounts.UserProfile;
 import base.GameService;
 import game.Village;
+import game.units.Units;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Created by nmikutskiy on 04.10.16.
@@ -35,7 +38,9 @@ public class VillageServlet extends HttpServlet {
         String path = request.getRequestURI().toString();
         String x = request.getParameter("x");
         String y = request.getParameter("y");
+        String count = request.getParameter("count");
         String areaNumber = request.getParameter("area_number");
+        String barraksLocation = request.getParameter("barraks_location");
 
         if (x == null || x.isEmpty() ||
                 y == null || y.isEmpty() ||
@@ -48,35 +53,46 @@ public class VillageServlet extends HttpServlet {
                 // TODO: get village by user name
                 break;
             case "/api/v1/village/build/palace":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "palace"))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildPalace(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildPalace(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/warehouse":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "warehouse"))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildWarehouse(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildWarehouse(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/farm":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "farm"))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildFarm(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildFarm(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/barracks":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, "barracks"))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.buildBarracks(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.buildBarracks(parseInt(x), parseInt(y), parseInt(areaNumber));
+                response.setStatus(HttpServletResponse.SC_CREATED);
+                break;
+            case "/api/v1/village/build/woodfactory":
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
+                    return;
+                gameService.buildWoodFactory(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             case "/api/v1/village/build/upgrade":
-                if (!checkAvailableToBuild(Integer.parseInt(x), Integer.parseInt(y), profile, ""))
+                if (!checkAvailableToBuild(parseInt(x), parseInt(y), profile, parseInt(areaNumber)))
                     return;
-                gameService.upgradeBuilding(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(areaNumber));
+                gameService.upgradeBuilding(parseInt(x), parseInt(y), parseInt(areaNumber));
                 response.setStatus(HttpServletResponse.SC_OK);
                 break;
+            case "/api/v1/village/army/create/spearman":
+                if (!checkAvailableToCreateUnits(parseInt(x), parseInt(y), parseInt(count), profile))
+                    return;
+                createUnit(parseInt(x), parseInt(y), profile, parseInt(count), parseInt(barraksLocation));
+                response.setStatus(HttpServletResponse.SC_OK);
             default:
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 response.getWriter().println("Something go wrong");
@@ -106,7 +122,7 @@ public class VillageServlet extends HttpServlet {
                         y == null || y.isEmpty() ||
                         villageName == null || villageName.isEmpty()) break;
 
-                Village village = createVillage(Integer.parseInt(x), Integer.parseInt(y), profile, villageName);
+                Village village = createVillage(parseInt(x), parseInt(y), profile, villageName);
                 if (village == null) break;
 
                 response.setContentType("text/html;charset=utf-8");
@@ -134,14 +150,47 @@ public class VillageServlet extends HttpServlet {
         }
     }
 
-    private boolean checkAvailableToBuild(int x, int y, UserProfile userProfile, String buildName){
+    private void createUnit(int x, int y, UserProfile ownerUser, int count, int barraksLocation){
+        gameService.createSpearman(x, y, count, barraksLocation, ownerUser.getLogin());
+    }
+
+    private boolean checkAvailableToBuild(int x, int y, UserProfile userProfile, int areaNumber){
         /*
         1. проверка что на этой клетке есть деревня вообще
         2. проверка что юзер строит в своей деревне
+        3. проверка что клетка для строительства не занята другим зданием
         TODO: 3. проверка, что достаточно ресурсов
         * */
-        if (gameService.getGameMap().getPlace(x, y).getVillage().getOwnerUser() != userProfile.getLogin()) return false;
+        Village village = gameService.getRegionOnTheMap(x, y).getVillage();
+        if (village == null) {
+            System.out.println("Ошибка при попытке построит здание: на указанной клетке нет деревни");
+            return false;
+        }
+        if (village.getOwnerUser() != userProfile.getLogin()) {
+            System.out.println("Ошибка при попытке построит здание: попытка построить здание в чужой деревне");
+            return false;
+        }
+        if (village.getAreaForBuildings().get(areaNumber) != null) {
+            System.out.println("Ошибка при попытке построит здание: попытка постотить здание на занятой клетке");
+            return false;
+        }
 
+        return true;
+    }
+
+    private boolean checkAvailableToCreateUnits(int x, int y, int count, UserProfile userProfile){
+        Village village = gameService.getRegionOnTheMap(x, y).getVillage();
+        if (village == null) {
+            System.out.println("Ошибка при попытке построит здание: на указанной клетке нет деревни");
+            return false;
+        }
+        if (village.getOwnerUser() != userProfile.getLogin()) {
+            System.out.println("Ошибка при попытке построит здание: попытка построить здание в чужой деревне");
+            return false;
+        }
+        if (count < 0) {
+            return false;
+        }
         return true;
     }
 }

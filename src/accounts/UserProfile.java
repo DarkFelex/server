@@ -1,5 +1,9 @@
 package accounts;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static accounts.UserProfile.AccountType.USER;
+
 /**
  * Created by nmikutskiy on 19.09.16.
  */
@@ -7,8 +11,10 @@ public class UserProfile {
     private final String login;
     private final String pass;
     private final String email;
-    private int gold = 300;
-    private int score = 10000;
+    private AccountType userGroup = USER;
+    private AtomicInteger gold = new AtomicInteger(300);
+    private AtomicInteger score = new AtomicInteger(10000);
+    //todo: добавить список деревень пользователя
 
     public UserProfile(String login, String pass, String email) {
         this.login = login;
@@ -20,6 +26,13 @@ public class UserProfile {
         this.login = login;
         this.pass = login;
         this.email = login;
+    }
+
+    public enum AccountType {
+        USER,
+        ADMIN,
+        TESTER,
+        DEVELOPER;
     }
 
     public String getLogin() {
@@ -35,18 +48,26 @@ public class UserProfile {
     }
 
     public int getGold() {
-        return gold;
+        return gold.get();
     }
 
     public int getScore() {
-        return score;
+        return score.get();
     }
 
     public void setGold(int gold) {
-        this.gold = gold;
+        this.gold.getAndSet(gold);
     }
 
     public void setScore(int score) {
-        this.score = score;
+        this.score.getAndSet(score);
+    }
+
+    public AccountType getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(AccountType userGroup) {
+        this.userGroup = userGroup;
     }
 }
