@@ -14,6 +14,7 @@ public class UserProfile {
     private AccountType userGroup = USER;
     private AtomicInteger gold = new AtomicInteger(300);
     private AtomicInteger score = new AtomicInteger(10000);
+    //todo: добавить список деревень пользователя
 
     public UserProfile(String login, String pass, String email) {
         this.login = login;
