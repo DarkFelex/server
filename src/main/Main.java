@@ -9,7 +9,6 @@ import base.DBService;
 import dbService.DBServiceImpl;
 import dbService.dataSets.UsersDataSet;
 import game.GameServiceImpl;
-import game.Map;
 import game.MapServlet;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -17,15 +16,15 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.ChatServlet;
 import servlets.Frontend;
 import servlets.SessionsServlet;
 import servlets.SignInServlet;
 import servlets.SignOutServlet;
 import servlets.SignUpServlet;
-import servlets.TestChatAppServlet;
 import servlets.UsersServlet;
 import servlets.VillageServlet;
+import timeMachine.TimeMachine;
+import timeMachine.TimeMachineImpl;
 
 /**
  * Created by nmikutskiy on 18.09.16.
@@ -37,7 +36,7 @@ public class Main {
         DBService dbService = new DBServiceImpl();
         dbService.printConnectInfo();
         try {
-            long userId = dbService.addUser("user");
+            long userId = dbService.addUser("user"); // юзер в базе
             System.out.println("Added user id: " + userId);
 
             UsersDataSet dataSet = dbService.getUser(userId);
@@ -50,11 +49,20 @@ public class Main {
 
         AccountService accountService = new AccountService();
 
-        accountService.addNewUser(new UserProfile("test"));
+        accountService.addNewUser(new UserProfile("test")); //будет затераться при рестарте
 
         GameService gameService = new GameServiceImpl();
         gameService.createCleanMap("FirstMap", 30, 15).fillRandomPlaces();
-        gameService.getRegionOnTheMap(1,2).enableVillageBuildingOnPlace();
+        for (int i = 1; i <= 30; i++){
+            for (int j = 1; j <= 15; j++){
+                gameService.getRegionOnTheMap(i, j).enableVillageBuildingOnPlace();
+                //gameService.getRegionOnTheMap(1,2).enableVillageBuildingOnPlace();
+            }
+        }
+
+        TimeMachine timeMachine = new TimeMachineImpl();//можно задать игровое время старта в секундах
+        timeMachine.startTime();
+        gameService.setTimeMachineInstandeLink(timeMachine);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         /**
@@ -66,16 +74,18 @@ public class Main {
          *
          */
         context.addServlet(new ServletHolder(new UsersServlet(accountService)), "/api/v1/users");
+        //todo: добавить get и set userGroup (ADMIN,USER,TESTER...) для профайлов пользователей
         context.addServlet(new ServletHolder(new SessionsServlet(accountService)), "/api/v1/sessions");
         context.addServlet(new ServletHolder(new VillageServlet(accountService, gameService)), "/api/v1/village/*");
         context.addServlet(new ServletHolder(new MapServlet(accountService, gameService)), "/api/v1/get_region");
+        context.addServlet(new ServletHolder(new Frontend(accountService, gameService)), "/api/v1/game/current_time");
 
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
         context.addServlet(new ServletHolder(new SignOutServlet(accountService)), "/signout");
 
-        context.addServlet(new ServletHolder(new Frontend(accountService)), "/views/*");
-        context.addServlet(new ServletHolder(new Frontend(accountService)), "/images/map/region/*");
+        context.addServlet(new ServletHolder(new Frontend(accountService, gameService)), "/views/*");
+        context.addServlet(new ServletHolder(new Frontend(accountService, gameService)), "/images/map/region/*");
 
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 //        todo: добавить вебсокет для системных сообщений
